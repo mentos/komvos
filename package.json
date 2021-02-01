@@ -1,0 +1,46 @@
+{
+  "name": "komvos-bot",
+  "version": "1.0.0",
+  "description": "A Discord bot for moderation on a server network basis.",
+  "main": "src/index.js",
+  "scripts": {
+    "app:monitor": "pm2 monit",
+    "app:reload": "pm2 reload komvos-bot",
+    "app:restart": "pm2 restart komvos-bot",
+    "app:start": "pm2 start src/index.js --name \"komvos-bot\" --log komvos.log --time",
+    "app:start:dev": "nodemon src/index.js",
+    "app:stop": "pm2 stop komvos-bot",
+    "lint": "eslint ./**/*.js",
+    "lint:fix": "eslint ./**/*.js --fix",
+    "prettify": "prettier --write ./**/*.js"
+  },
+  "keywords": [
+    "bot",
+    "cross-server",
+    "discord",
+    "eris",
+    "moderation",
+    "networking"
+  ],
+  "author": "Ioannis Tziligkakis",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "babel-eslint": "^10.1.0",
+    "better-logging": "^4.4.0",
+    "debug": "^4.2.0",
+    "discord-command-parser": "^1.5.1",
+    "dotenv": "^8.2.0",
+    "eris": "^0.14.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "just-camel-case": "^4.0.2",
+    "just-is-empty": "^2.0.1",
+    "nodemon": "^2.0.6",
+    "pm2": "^4.5.1",
+    "postgres": "^1.0.2",
+    "prettier": "^2.1.2",
+    "prexit": "^0.0.5",
+    "typescript": "^4.0.5"
+  }
+}
