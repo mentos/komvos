@@ -40,7 +40,6 @@
     "pm2": "^4.5.1",
     "postgres": "^1.0.2",
     "prettier": "^2.1.2",
-    "prexit": "^0.0.5",
-    "typescript": "^4.0.5"
+    "prexit": "^0.0.5"
   }
 }
