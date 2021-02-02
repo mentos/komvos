@@ -33,7 +33,7 @@ Default bot prefix: `k!`.
 
 1. Add bot to your server: `https://discord.com/api/oauth2/authorize?client_id=<DISCORD_APP_CLIENT_ID>&permissions=224452&scope=bot`
 2. `k!network-create [channel id]`
-2. `k!network-create [channel id]`
+2. `k!network-invite [server id] [passphrase]`
 
 
 ## Commands
