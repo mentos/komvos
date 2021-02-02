@@ -23,11 +23,6 @@ Default bot prefix: `k!`.
   - [`guildCreate`](#guildcreate)
   - [`guildDelete`](#guilddelete)
   - [`guildMemberAdd`](#guildmemberadd)
-- [Development](#development)
-  - [Database tables](#database-tables)
-    - [`ban_broadcasts` table](#ban_broadcasts-table)
-    - [`networks` table](#networks-table)
-    - [`networks_servers` table](#networks_servers-table)
 
 ## Setup
 
