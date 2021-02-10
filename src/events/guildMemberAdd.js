@@ -22,7 +22,7 @@ module.exports = (client) => async (guild, member) => {
     { name: "Report Type", value: banBroadcast.report_type },
     { name: "Banned User", value: banBroadcast.banned_tag, inline: true },
     { name: "User ID", value: banBroadcast.banned_id, inline: true },
-    { name: "Broadcast data", value: banBroadcast.created_at },
+    { name: "Broadcast date", value: banBroadcast.created_at },
   ];
   const embed = new EmbedBuilder({
     color: 16763904,

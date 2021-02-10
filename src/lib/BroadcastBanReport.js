@@ -114,7 +114,7 @@ module.exports = async ({
     { name: "Banned User", value: banInfo.banned_tag, inline: true },
     { name: "User ID", value: banInfo.banned_id, inline: true },
     { name: "Mention", value: `<@${banInfo.banned_id}>`, inline: true },
-    { name: "Broadcast data", value: now },
+    { name: "Broadcast date", value: now },
     { name: "Command", value: `k!ban-broadcast ${bannedUser.id}` },
   ];
 
