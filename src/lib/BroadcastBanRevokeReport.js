@@ -15,7 +15,11 @@ async function BroadcastBanRevokeReport({
   reason,
 }) {
   const network = await GetGuildActiveNetwork(guild.id);
-  const banBroadcast = await GetBanBroadcast(network.id, bannedUserId, guild.id);
+  const banBroadcast = await GetBanBroadcast(
+    network.id,
+    bannedUserId,
+    guild.id
+  );
 
   if (isEmpty(banBroadcast)) {
     const description =

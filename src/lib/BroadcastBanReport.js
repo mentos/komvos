@@ -57,7 +57,11 @@ module.exports = async ({
     channel = client.repo.GetGuildChannel(guild, settings.channelId, true);
   }
 
-  const banBroadcast = await GetBanBroadcast(network.id, bannedUser.id, guild.id);
+  const banBroadcast = await GetBanBroadcast(
+    network.id,
+    bannedUser.id,
+    guild.id
+  );
 
   if (!isEmpty(banBroadcast)) {
     const description =
