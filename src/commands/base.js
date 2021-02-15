@@ -34,6 +34,26 @@ module.exports = function (command) {
         });
 
         console.trace(e);
+
+        // @TODO - Start: Move this to a utility
+        console.info("🟡 DEBUG INFO:");
+
+        let author = "N/A";
+        let channel = "N/A";
+        let guild = "N/A";
+
+        try {
+          author = this.message.author.tag;
+        } catch (e) {}
+        try {
+          channel = this.message.channel.id;
+        } catch (e) {}
+        try {
+          guild = this.message.guild.name;
+        } catch (e) {}
+
+        console.info({ author, channel, guild });
+        // @TODO - End
       }
     },
 
