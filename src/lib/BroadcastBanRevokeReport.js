@@ -60,7 +60,7 @@ async function BroadcastBanRevokeReport({
     }
   }
 
-  await RevokeBanBroadcast(banBroadcast.id, new Date().toISOString());
+  await RevokeBanBroadcast(banBroadcast.id, new Date().toISOString(), guild.id);
 
   for (const gchannel of channels) {
     await gchannel.createMessage({
