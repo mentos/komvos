@@ -57,11 +57,11 @@ module.exports = async ({
     channel = client.repo.GetGuildChannel(guild, settings.channelId, true);
   }
 
-  const banBroadcast = await GetBanBroadcast(network.id, bannedUser.id);
+  const banBroadcast = await GetBanBroadcast(network.id, bannedUser.id, guild.id);
 
   if (!isEmpty(banBroadcast)) {
     const description =
-      `🔔 _A broadcast for **${banBroadcast.banned_tag}** ` +
+      `🔔 _Broadcast for **${banBroadcast.banned_tag}** ` +
       `already sent to network on **${banBroadcast.created_at}**_`;
     const embed = new EmbedBuilder({ color: 16763904, description }).sendable;
     await channel.createMessage({ embed });
@@ -213,7 +213,7 @@ module.exports = async ({
     try {
       await AddBanBroadcast(banInfo);
     } catch (e) {
-      if (!fromCommand && errorCodes[e.code] === "unique_violation") {
+      if (errorCodes[e.code] === "unique_violation") {
         const description =
           `🔔 _A broadcast for ${banInfo.banned_tag} ` +
           `already sent to network_`;
