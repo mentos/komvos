@@ -11,6 +11,7 @@ module.exports = {
   REPORT_SPAMMING_TROLLING: "Spamming / trolling",
   REPORT_MUTUAL_NETWORK: "Follow up network ban",
   SETTINGS_ALLOW_INVITES: "allowInvites",
+  SETTINGS_ALERTS_CHANNEL_ID: "alertsChannelId",
   SETTINGS_CHANNEL_ID: "channelId",
   SETTINGS_PREFIX: "prefix",
   SETTINGS_ROLE_ID: "reportedRoleId",

@@ -16,7 +16,7 @@ module.exports = base({
 
   memberPermissions: ["administrator"],
 
-  usage: "`k!network-config [prefix|channel|invites|permissions|role] (value)`",
+  usage: "`k!network-config [alertsChannel|prefix|channel|invites|permissions|role] (value)`",
 
   exec: async function () {
     const rawKey = this.parsedCommand.reader.getString();
@@ -81,6 +81,7 @@ module.exports = base({
     }
 
     const key = {
+      alertsChannel: Constants.SETTINGS_ALERTS_CHANNEL_ID,
       channel: Constants.SETTINGS_CHANNEL_ID,
       invites: Constants.SETTINGS_ALLOW_INVITES,
       prefix: Constants.SETTINGS_PREFIX,
@@ -101,6 +102,8 @@ module.exports = base({
     let value;
 
     if (key === Constants.SETTINGS_CHANNEL_ID) {
+      value = this.parsedCommand.reader.getChannelID();
+    } else if (key === Constants.SETTINGS_ALERTS_CHANNEL_ID) {
       value = this.parsedCommand.reader.getChannelID();
     } else if (key === Constants.SETTINGS_ROLE_ID) {
       value = this.parsedCommand.reader.getString() || "";
@@ -129,6 +132,13 @@ module.exports = base({
         isEmpty(value) ? settings.channelId : value
       );
 
+    const alertsChannel =
+      key === Constants.SETTINGS_ALERTS_CHANNEL_ID &&
+      this.client.repo.GetGuildChannel(
+        this.guild,
+        isEmpty(value) ? settings.alertsChannelId : value
+      );
+
     const role =
       key === Constants.SETTINGS_ROLE_ID &&
       (await this.guild.roles.get(
@@ -143,6 +153,8 @@ module.exports = base({
 
     if (channel) {
       configReply = channel.mention;
+    } else if (alertsChannel) {
+      configReply = alertsChannel.mention;
     } else if (key === Constants.SETTINGS_ROLE_ID) {
       configReply = role ? role.mention : "none";
     } else if (key === Constants.SETTINGS_ALLOW_INVITES) {

@@ -13,6 +13,7 @@ const config = Object.keys(process.env)
   }, {});
 
 config.defaultClientSettings = {
+  alertsChannelId: "",
   allowInvites: false,
   broadcasts: "mutual",
   channelId: "",
