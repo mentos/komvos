@@ -12,7 +12,6 @@ const {
   GetNetworkGuilds,
 } = require("./resourceRepo");
 
-const MEMBER_BAN_ADD = Eris.Constants.AuditLogActions.MEMBER_BAN_ADD;
 const REPORT_OPTIONS = {
   "1️⃣": Constants.REPORT_ABUSER,
   "2️⃣": Constants.REPORT_ADVERTISING,
@@ -80,13 +79,10 @@ module.exports = async ({
   const banValidator = checkBanPresence(bannedTag)(guild)(channel);
   await banValidator(bannedUser.id);
 
-  let reason;
+  let reason = null;
 
   if (fromCommand) {
     reason = banReason;
-  } else {
-    const log = await guild.getAuditLogs(1, null, MEMBER_BAN_ADD);
-    reason = log.entries[0].reason;
   }
 
   const now = new Date().toISOString();
