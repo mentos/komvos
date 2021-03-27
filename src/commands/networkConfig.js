@@ -16,7 +16,7 @@ module.exports = base({
 
   memberPermissions: ["administrator"],
 
-  usage: "`k!network-config [prefix|channel|invites|permissions] (value)`",
+  usage: "`k!network-config [prefix|channel|invites|permissions|role] (value)`",
 
   exec: async function () {
     const rawKey = this.parsedCommand.reader.getString();
@@ -84,6 +84,7 @@ module.exports = base({
       channel: Constants.SETTINGS_CHANNEL_ID,
       invites: Constants.SETTINGS_ALLOW_INVITES,
       prefix: Constants.SETTINGS_PREFIX,
+      role: Constants.SETTINGS_ROLE_ID,
     }[rawKey];
 
     if (isEmpty(key)) {
@@ -96,10 +97,20 @@ module.exports = base({
       return;
     }
 
+    let clearValue;
     let value;
 
     if (key === Constants.SETTINGS_CHANNEL_ID) {
       value = this.parsedCommand.reader.getChannelID();
+    } else if (key === Constants.SETTINGS_ROLE_ID) {
+      value = this.parsedCommand.reader.getString() || "";
+      if (value === "clear") {
+        clearValue = true;
+        value = null;
+      } else {
+        const match = value.match(/^\<@&?(\d{17,19})\>$/);
+        value = match && match[1] ? match[1] : null;
+      }
     } else {
       value = this.parsedCommand.reader.getString();
 
@@ -118,15 +129,30 @@ module.exports = base({
         isEmpty(value) ? settings.channelId : value
       );
 
+    const role =
+      key === Constants.SETTINGS_ROLE_ID &&
+      (await this.guild.roles.get(
+        !clearValue && isEmpty(value)
+          ? settings.reportedRoleId
+          : clearValue
+          ? null
+          : value
+      ));
+
+    let configReply = "";
+
+    if (channel) {
+      configReply = channel.mention;
+    } else if (key === Constants.SETTINGS_ROLE_ID) {
+      configReply = role ? role.mention : "none";
+    } else if (key === Constants.SETTINGS_ALLOW_INVITES) {
+      configReply = this.inviteLabels[settings[key]];
+    } else {
+      configReply = settings[key] || "none";
+    }
+
     if (isEmpty(value)) {
-      await this.replyWithConfig(
-        rawKey,
-        channel
-          ? channel.mention
-          : key === Constants.SETTINGS_ALLOW_INVITES
-          ? this.inviteLabels[settings[key]]
-          : settings[key]
-      );
+      await this.replyWithConfig(rawKey, configReply);
       return;
     }
 
@@ -151,11 +177,7 @@ module.exports = base({
 
     this.client.repo.SetGuildClientSettings(this.guild.id, newSettings);
 
-    await this.replyWithConfig(
-      rawKey,
-      channel ? channel.mention : value,
-      "Komvos Settings Updated"
-    );
+    await this.replyWithConfig(rawKey, configReply);
   },
 
   get inviteValues() {

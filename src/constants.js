@@ -13,4 +13,5 @@ module.exports = {
   SETTINGS_ALLOW_INVITES: "allowInvites",
   SETTINGS_CHANNEL_ID: "channelId",
   SETTINGS_PREFIX: "prefix",
+  SETTINGS_ROLE_ID: "reportedRoleId",
 };

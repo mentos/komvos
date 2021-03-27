@@ -17,6 +17,7 @@ config.defaultClientSettings = {
   broadcasts: "mutual",
   channelId: "",
   prefix: "k!",
+  reportedRoleId: "",
 };
 
 module.exports = config;
