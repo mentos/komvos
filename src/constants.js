@@ -7,7 +7,7 @@ module.exports = {
   REPORT_CHILD_SAFETY: "Child Safety",
   REPORT_GRAPHIC_CONTENT: "Graphic or illegal content",
   REPORT_RAIDING: "Raiding",
-  REPORT_SCAM_ILLEGAL_SERVICES: "Scam, fraud or illegal sales / services",
+  REPORT_SCAM_ILLEGAL_SERVICES: "Scam, fraud or illegal services / cheating",
   REPORT_SPAMMING_TROLLING: "Spamming / trolling",
   REPORT_MUTUAL_NETWORK: "Follow up network ban",
   SETTINGS_ALLOW_INVITES: "allowInvites",
