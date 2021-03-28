@@ -10,6 +10,7 @@ const resourceRepo = {
   GetGuildActiveNetwork: require("./getGuildActiveNetwork")(sql),
   GetGuildNetworksCount: require("./getGuildNetworksCount")(sql),
   GetGuildOwnedNetwork: require("./getGuildOwnedNetwork")(sql),
+  GetNetworkBroadcast: require("./getNetworkBroadcast")(sql),
   GetNetworkGuildIdForKick: require("./getNetworkGuildIdForKick")(sql),
   GetNetworkGuilds: require("./getNetworkGuilds")(sql),
   RemoveGuildFromNetwork: require("./removeGuildFromNetwork")(sql),
