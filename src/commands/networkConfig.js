@@ -16,7 +16,8 @@ module.exports = base({
 
   memberPermissions: ["administrator"],
 
-  usage: "`k!network-config [alertsChannel|prefix|channel|invites|permissions|role] (value)`",
+  usage:
+    "`k!network-config [alertsChannel|prefix|channel|invites|permissions|role] (value)`",
 
   exec: async function () {
     const rawKey = this.parsedCommand.reader.getString();
