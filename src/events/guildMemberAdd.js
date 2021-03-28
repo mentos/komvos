@@ -11,11 +11,18 @@ module.exports = (client) => async (guild, member) => {
 
   const settings = await client.repo.GetGuildClientSettings(guild.id);
 
-  channel = client.repo.GetGuildChannel(guild, settings.channelId, true);
+  const channelId = settings.alertsChannelId || settings.channelId;
+  const channel = client.repo.GetGuildChannel(guild, channelId, true);
 
   const banBroadcast = await GetBanBroadcast(network.id, member.id);
 
   if (!banBroadcast) return;
+
+  const role = guild.roles.get(settings.reportedRoleId);
+
+  if (role) {
+    member.addRole(role.id, "Added by Komvos");
+  }
 
   const description = `> ${banBroadcast.reason || "No reason provided."}\n\n`;
   const fields = [
