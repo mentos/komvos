@@ -36,7 +36,7 @@ module.exports = base({
     }
 
     const fields = broadcasts.map((b, i) => ({
-      name: `${i + 1}. ${b.guild_name}`,
+      name: `${i + 1}. ${b.guild_name}${b.revoked_at && " **[REVOKED]**"}`,
       value: `\n` + b.report_type + `\n📆_${b.created_at.toDateString()}_`,
     }));
 
