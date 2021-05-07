@@ -6,6 +6,6 @@ module.exports = (sql) => async (id, revokedAt, guild_id = null) =>
       revoked_at = ${revokedAt}
     WHERE
       id = ${id} AND
-      guild_id = ${guild_id}
+      guild_id = ${guild_id} AND
       revoked_at IS NULL
   `;
