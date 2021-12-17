@@ -20,19 +20,21 @@
   "author": "Ioannis Tziligkakis",
   "license": "UNLICENSED",
   "dependencies": {
-    "babel-eslint": "^10.1.0",
-    "better-logging": "^4.4.0",
     "discord-command-parser": "^1.5.1",
     "dotenv": "^8.2.0",
     "eris": "0.16.1",
-    "eslint": "^7.13.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4",
     "just-camel-case": "^4.0.2",
     "just-is-empty": "^2.0.1",
-    "nodemon": "^2.0.6",
     "postgres": "^1.0.2",
-    "prettier": "^2.1.2",
     "prexit": "^0.0.5"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "better-logging": "^4.4.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint": "^7.13.0",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2"
   }
 }
