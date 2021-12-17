@@ -252,7 +252,10 @@ module.exports = async ({
           `✅ _**Ban for ${banInfo.banned_tag} broadcasted to network**_` +
           (invalidGuildChannels.length
             ? "\n\n **Note:** There war a problem broadcasting to the following servers:\n" +
-              invalidGuildChannels.map((g) => `- ${g.name}`).sort().join(", ") +
+              invalidGuildChannels
+                .map((g) => `- ${g.name}`)
+                .sort()
+                .join(", ") +
               "."
             : ""),
       }).sendable,
