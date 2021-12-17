@@ -1,6 +1,5 @@
 const Constants = require("../constants");
 const EmbedBuilder = require("./EmbedBuilder");
-const Eris = require("eris");
 const ReactionHandler = require("./ReactionHandler");
 const { CommandError } = require("../commands/base");
 const { errorCodes } = require("../db");
@@ -227,19 +226,24 @@ module.exports = async ({
     fields.pop(); // remove command from broadcasted message
 
     for (const gchannel of channels) {
-      await gchannel.createMessage({
-        embed: new EmbedBuilder({
-          author: {
-            icon_url: guild.iconURL,
-            name: guild.name,
-          },
-          description,
-          fields,
-          footer: { text: `Network ID: ${network.uuid}` },
-          image: { url: bannedUser.avatarURL, height: 50, width: 50 },
-          title: "Network Ban Broadcast",
-        }).sendable,
-      });
+      try {
+        await gchannel.createMessage({
+          embed: new EmbedBuilder({
+            author: {
+              icon_url: guild.iconURL,
+              name: guild.name,
+            },
+            description,
+            fields,
+            footer: { text: `Network ID: ${network.uuid}` },
+            image: { url: bannedUser.avatarURL, height: 50, width: 50 },
+            title: "Network Ban Broadcast",
+          }).sendable,
+        });
+      } catch (e) {
+        invalidGuildChannels.push(gchannel.guild);
+        console.trace(e);
+      }
     }
 
     await channel.createMessage({
@@ -247,8 +251,8 @@ module.exports = async ({
         description:
           `✅ _**Ban for ${banInfo.banned_tag} broadcasted to network**_` +
           (invalidGuildChannels.length
-            ? "\n\n :small_blue_diamond: **Note:** was not able to broadcast to the servers: " +
-              invalidGuildChannels.map((g) => `${g}`).join(", ") +
+            ? "\n\n **Note:** There war a problem broadcasting to the following servers:\n" +
+              invalidGuildChannels.map((g) => `- ${g.name}`).sort().join(", ") +
               "."
             : ""),
       }).sendable,
