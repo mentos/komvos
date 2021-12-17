@@ -22,7 +22,6 @@
   "dependencies": {
     "babel-eslint": "^10.1.0",
     "better-logging": "^4.4.0",
-    "debug": "^4.2.0",
     "discord-command-parser": "^1.5.1",
     "dotenv": "^8.2.0",
     "eris": "0.16.1",
