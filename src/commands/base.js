@@ -38,19 +38,9 @@ module.exports = function (command) {
         // @TODO - Start: Move this to a utility
         console.info("🟡 DEBUG INFO:");
 
-        let author = "N/A";
-        let channel = "N/A";
-        let guild = "N/A";
-
-        try {
-          author = this.message.author.tag;
-        } catch (e) {}
-        try {
-          channel = this.message.channel.id;
-        } catch (e) {}
-        try {
-          guild = this.message.guild.name;
-        } catch (e) {}
+        let author = this.message?.author?.tag || "N/A";
+        let channel = this.message?.channel?.id || "N/A";
+        let guild = this.message?.guild?.name || "N/A";
 
         console.info({ author, channel, guild });
         // @TODO - End
