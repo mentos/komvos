@@ -1,7 +1,7 @@
 {
   "name": "komvos-bot",
   "version": "1.0.0",
-  "description": "A Discord bot for moderation on a server network basis.",
+  "description": "A Discord bot for cross-server moderation.",
   "main": "src/index.js",
   "scripts": {
     "app:start:dev": "nodemon src/index.js",
