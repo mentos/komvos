@@ -15,7 +15,7 @@ Object.defineProperty(Eris.Member.prototype, "tag", {
 });
 
 Eris.Member.prototype.hasPermission = function (perm) {
-  return this.permission.has(perm);
+  return this.permissions.has(perm);
 };
 
 Object.defineProperty(Eris.Message.prototype, "guild", {
