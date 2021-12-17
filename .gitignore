@@ -3,3 +3,4 @@ node_modules
 notes.md
 sql.md
 .env
+.env.Development
