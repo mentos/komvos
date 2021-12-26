@@ -4,6 +4,11 @@
   "description": "A Discord bot for cross-server moderation.",
   "main": "src/index.js",
   "scripts": {
+    "app:monitor": "pm2 monit",
+    "app:reload": "pm2 reload komvos-bot",
+    "app:restart": "pm2 restart komvos-bot",
+    "app:start": "pm2 start src/index.js --name \"komvos-bot\" --log ./talos.log --time",
+    "app:stop": "pm2 stop komvos-bot",
     "app:start:dev": "nodemon src/index.js",
     "lint": "eslint ./**/*.js",
     "lint:fix": "eslint ./**/*.js --fix",
@@ -25,15 +30,16 @@
     "eris": "0.16.1",
     "just-camel-case": "^4.0.2",
     "just-is-empty": "^2.0.1",
+    "pm2": "^5.1.2",
     "postgres": "^1.0.2",
     "prexit": "^0.0.5"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "better-logging": "^4.4.0",
+    "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint": "^7.13.0",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2"
   }
