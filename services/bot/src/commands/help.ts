@@ -24,9 +24,9 @@ export default createBaseCommand({
             (c) =>
               `⮩ \`${c.usage || ""}\`\n${
                 c.description || ""
-              } (_${c.memberPermissions?.join(", ") || ""}_).`
+              } (_${c.memberPermissions?.join(", ") || ""}_).`,
           )
-          .join("\n\n")
+          .join("\n\n"),
       )
       .timestamp().sendable;
 

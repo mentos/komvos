@@ -1,6 +1,6 @@
-import type { Sql } from 'postgres';
-import { CommandArgumentError } from '../../commands/base';
-const { isEmpty } = require('../../utils');
+import type { Sql } from "postgres";
+import { CommandArgumentError } from "../../commands/base";
+const { isEmpty } = require("../../utils");
 
 interface NetworkCountResult {
   count: string; // PostgreSQL COUNT returns string
@@ -10,10 +10,16 @@ interface GetGuildNetworksCountFunction {
   (guildId: string): Promise<NetworkCountResult>;
 }
 
-export default function getGuildNetworksCountRepository(sql: Sql): GetGuildNetworksCountFunction {
-  return async function getGuildNetworksCount(guildId: string): Promise<NetworkCountResult> {
+export default function getGuildNetworksCountRepository(
+  sql: Sql,
+): GetGuildNetworksCountFunction {
+  return async function getGuildNetworksCount(
+    guildId: string,
+  ): Promise<NetworkCountResult> {
     if (isEmpty(guildId)) {
-      throw new CommandArgumentError('Invalid argument: `guildId` is required.');
+      throw new CommandArgumentError(
+        "Invalid argument: `guildId` is required.",
+      );
     }
 
     const [network] = await sql<NetworkCountResult[]>`
@@ -27,7 +33,7 @@ export default function getGuildNetworksCountRepository(sql: Sql): GetGuildNetwo
     `;
 
     if (!network) {
-      throw new Error('Failed to count guild networks');
+      throw new Error("Failed to count guild networks");
     }
 
     return network;

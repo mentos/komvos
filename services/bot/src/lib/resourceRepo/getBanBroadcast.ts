@@ -1,15 +1,21 @@
-import type { Sql } from 'postgres';
-import type { BanBroadcast, GetBanBroadcastResult } from '../../types/database';
+import type { Sql } from "postgres";
+import type { BanBroadcast, GetBanBroadcastResult } from "../../types/database";
 
 interface GetBanBroadcastFunction {
-  (networkId: number, bannedId: string, guildId?: string | null): Promise<GetBanBroadcastResult>;
+  (
+    networkId: number,
+    bannedId: string,
+    guildId?: string | null,
+  ): Promise<GetBanBroadcastResult>;
 }
 
-export default function getBanBroadcastRepository(sql: Sql): GetBanBroadcastFunction {
+export default function getBanBroadcastRepository(
+  sql: Sql,
+): GetBanBroadcastFunction {
   return async function getBanBroadcast(
     networkId: number,
     bannedId: string,
-    guildId: string | null = null
+    guildId: string | null = null,
   ): Promise<GetBanBroadcastResult> {
     if (guildId) {
       const [broadcast] = await sql<BanBroadcast[]>`

@@ -7,14 +7,16 @@ import {
 } from "../lib/repositories";
 import createBaseCommand, { CommandError, CommandTargetError } from "./base";
 
-const validateGuildInvitationStatus = (guild: Guild) => (allowInvites: boolean): void => {
-  if (!allowInvites) {
-    throw new CommandError(
-      `Server **${guild.name}** has turned off network invitations for **Komvos**. ` +
-        "Please let the server administrator know and try again when everything is setup."
-    );
-  }
-};
+const validateGuildInvitationStatus =
+  (guild: Guild) =>
+  (allowInvites: boolean): void => {
+    if (!allowInvites) {
+      throw new CommandError(
+        `Server **${guild.name}** has turned off network invitations for **Komvos**. ` +
+          "Please let the server administrator know and try again when everything is setup.",
+      );
+    }
+  };
 
 export default createBaseCommand({
   name: "network-invite",
@@ -36,7 +38,7 @@ export default createBaseCommand({
     const network = await GetGuildOwnedNetwork(this.message.guild!, passphrase);
 
     const { channelId } = await this.client.repo.GetGuildClientSettings(
-      this.guild!.id
+      this.guild!.id,
     );
 
     this.client.repo.GetGuildChannel(channelId);
@@ -44,21 +46,21 @@ export default createBaseCommand({
     if ((await GetGuildNetworksCount(targetGuild.id)).count > 0) {
       throw new CommandTargetError(
         `Server **${targetGuild.name}** is already a member of a **Komvos** network. ` +
-          "Please let the server administrator know and try again when everything is setup."
+          "Please let the server administrator know and try again when everything is setup.",
       );
     }
 
-    const {
-      allowInvites,
-      channelId: targetChannelId,
-    } = await this.client.repo.GetGuildClientSettings(targetGuild.id);
+    const { allowInvites, channelId: targetChannelId } =
+      await this.client.repo.GetGuildClientSettings(targetGuild.id);
 
     validateGuildInvitationStatus(targetGuild)(allowInvites);
 
     const targetChannel = this.client.repo.GetGuildChannel(targetChannelId);
 
     if (!targetChannel) {
-      throw new CommandError("Target guild does not have a valid announcements channel set up.");
+      throw new CommandError(
+        "Target guild does not have a valid announcements channel set up.",
+      );
     }
 
     await new GuildBroadcastPrompt({
@@ -70,7 +72,7 @@ export default createBaseCommand({
         targetGuild,
         targetChannel,
         network,
-        this.channel
+        this.channel,
       ),
       onReject: this.handleRejection.bind(this, targetGuild, this.channel),
       promptContent: {
@@ -90,23 +92,23 @@ export default createBaseCommand({
     targetGuild: Guild,
     targetChannel: TextChannel,
     network: any,
-    announcementsChannel: TextChannel
+    announcementsChannel: TextChannel,
   ): Promise<void> {
     await AddGuildToNetwork(targetGuild.id, network.id);
     await announcementsChannel.send({
-      content: `Folks at server **${targetGuild.name}** accepted your **Komvos** network invitation!`
+      content: `Folks at server **${targetGuild.name}** accepted your **Komvos** network invitation!`,
     });
     await targetChannel.send({
-      content: `Congrats! You are now member of **Komvos** network: \`${network.uuid}\`!`
+      content: `Congrats! You are now member of **Komvos** network: \`${network.uuid}\`!`,
     });
   },
 
   handleRejection: async function (
     targetGuild: Guild,
-    announcementsChannel: TextChannel
+    announcementsChannel: TextChannel,
   ): Promise<void> {
     await announcementsChannel.send({
-      content: `Folks at server **${targetGuild.name}** rejected your **Komvos** network invitation.`
+      content: `Folks at server **${targetGuild.name}** rejected your **Komvos** network invitation.`,
     });
   },
 });

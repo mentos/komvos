@@ -1,11 +1,13 @@
-import type { Sql } from 'postgres';
-import type { AddBanBroadcastParams, BanBroadcast } from '../../types/database';
+import type { Sql } from "postgres";
+import type { AddBanBroadcastParams, BanBroadcast } from "../../types/database";
 
 interface AddBanBroadcastFunction {
   (params: AddBanBroadcastParams): Promise<BanBroadcast>;
 }
 
-export default function addBanBroadcastRepository(sql: Sql): AddBanBroadcastFunction {
+export default function addBanBroadcastRepository(
+  sql: Sql,
+): AddBanBroadcastFunction {
   return async function addBanBroadcast({
     banned_id,
     banned_tag,
@@ -32,7 +34,7 @@ export default function addBanBroadcastRepository(sql: Sql): AddBanBroadcastFunc
       RETURNING *`;
 
     if (!broadcast) {
-      throw new Error('Failed to create ban broadcast');
+      throw new Error("Failed to create ban broadcast");
     }
 
     return broadcast;

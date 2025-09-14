@@ -1,15 +1,17 @@
-import type { Sql } from 'postgres';
-import type { RevokeBanBroadcastParams } from '../../types/database';
+import type { Sql } from "postgres";
+import type { RevokeBanBroadcastParams } from "../../types/database";
 
 interface RevokeBanBroadcastFunction {
   (params: RevokeBanBroadcastParams): Promise<void>;
 }
 
-export default function revokeBanBroadcastRepository(sql: Sql): RevokeBanBroadcastFunction {
+export default function revokeBanBroadcastRepository(
+  sql: Sql,
+): RevokeBanBroadcastFunction {
   return async function revokeBanBroadcast({
     banned_id,
     network_id,
-    reason = '',
+    reason = "",
   }: RevokeBanBroadcastParams): Promise<void> {
     const now = new Date();
 

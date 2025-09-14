@@ -1,14 +1,11 @@
 import { successEmbed } from "../lib/EmbedBuilder";
-import {
-  GetGuildActiveNetwork,
-  GetNetworkGuilds,
-} from "../lib/repositories";
+import { GetGuildActiveNetwork, GetNetworkGuilds } from "../lib/repositories";
 import createBaseCommand from "./base";
 
 const truncate = (text: string, length: number = 25): string =>
   `${text.slice(0, length)}${text.length > length ? "…" : ""}`.padEnd(
     length + 5,
-    " "
+    " ",
   );
 
 export default createBaseCommand({
@@ -49,20 +46,22 @@ export default createBaseCommand({
       .join("\n");
 
     await this.channel.send({
-      embeds: [successEmbed({
-        title: "Network information",
-        titlePrefix: "",
-        description: `${description}${
-          unreachableGuilds.length
-            ? `\n\nUnreachable guilds: ${unreachableGuilds.join(", ")}`
-            : ""
-        }`,
-        fields: [
-          ["Network ID", network.uuid],
-          ["Network Creation Date", network.established_at.toDateString()],
-          ["Network Administrator", owner.name],
-        ],
-      })],
+      embeds: [
+        successEmbed({
+          title: "Network information",
+          titlePrefix: "",
+          description: `${description}${
+            unreachableGuilds.length
+              ? `\n\nUnreachable guilds: ${unreachableGuilds.join(", ")}`
+              : ""
+          }`,
+          fields: [
+            ["Network ID", network.uuid],
+            ["Network Creation Date", network.established_at.toDateString()],
+            ["Network Administrator", owner.name],
+          ],
+        }),
+      ],
     });
   },
 });

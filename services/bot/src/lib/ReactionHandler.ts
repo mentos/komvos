@@ -1,5 +1,16 @@
 import { EventEmitter } from "events";
-import { Message, User, Client, GuildEmoji, ReactionEmoji, MessageReaction, PartialMessageReaction, PartialUser, MessageReactionEventDetails, PartialMessage } from "discord.js";
+import {
+  Message,
+  User,
+  Client,
+  GuildEmoji,
+  ReactionEmoji,
+  MessageReaction,
+  PartialMessageReaction,
+  PartialUser,
+  MessageReactionEventDetails,
+  PartialMessage,
+} from "discord.js";
 
 interface CollectedReaction {
   msg: Message | PartialMessage;
@@ -23,10 +34,23 @@ class ReactionHandler extends EventEmitter {
   private permanent: boolean;
   private ended: boolean;
   public collected: CollectedReaction[];
-  private listenerAdd: (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser, details: MessageReactionEventDetails) => void;
-  private listenerRemove: (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser, details: MessageReactionEventDetails) => void;
+  private listenerAdd: (
+    reaction: MessageReaction | PartialMessageReaction,
+    user: User | PartialUser,
+    details: MessageReactionEventDetails,
+  ) => void;
+  private listenerRemove: (
+    reaction: MessageReaction | PartialMessageReaction,
+    user: User | PartialUser,
+    details: MessageReactionEventDetails,
+  ) => void;
 
-  constructor(message: Message, filter: (userId: string) => boolean, permanent: boolean = false, options: ReactionHandlerOptions = {}) {
+  constructor(
+    message: Message,
+    filter: (userId: string) => boolean,
+    permanent: boolean = false,
+    options: ReactionHandlerOptions = {},
+  ) {
     super();
 
     this.client = message.client;
@@ -37,9 +61,14 @@ class ReactionHandler extends EventEmitter {
     this.ended = false;
     this.collected = [];
 
-    this.listenerAdd = (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) =>
-      this.checkAddPreConditions(reaction.message, reaction.emoji, user);
-    this.listenerRemove = (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) =>
+    this.listenerAdd = (
+      reaction: MessageReaction | PartialMessageReaction,
+      user: User | PartialUser,
+    ) => this.checkAddPreConditions(reaction.message, reaction.emoji, user);
+    this.listenerRemove = (
+      reaction: MessageReaction | PartialMessageReaction,
+      user: User | PartialUser,
+    ) =>
       this.checkRemovePreConditions(reaction.message, reaction.emoji, user.id);
 
     this.client.on("messageReactionAdd", this.listenerAdd);
@@ -56,7 +85,11 @@ class ReactionHandler extends EventEmitter {
    * @param {GuildEmoji | ReactionEmoji} emoji The emoji object containing its name and its ID
    * @param {User | PartialUser} reactor The user who reacted to this message
    */
-  private checkAddPreConditions(msg: Message | PartialMessage, emoji: GuildEmoji | ReactionEmoji, reactor: User | PartialUser): boolean {
+  private checkAddPreConditions(
+    msg: Message | PartialMessage,
+    emoji: GuildEmoji | ReactionEmoji,
+    reactor: User | PartialUser,
+  ): boolean {
     if (this.message.id !== msg.id) {
       return false;
     }
@@ -65,7 +98,10 @@ class ReactionHandler extends EventEmitter {
       this.collected.push({ msg, emoji, userID: reactor.id });
       this.emit("reacted", { msg, emoji, userID: reactor.id });
 
-      if (this.options.maxMatches && this.collected.length >= this.options.maxMatches) {
+      if (
+        this.options.maxMatches &&
+        this.collected.length >= this.options.maxMatches
+      ) {
         this.stopListening("maxMatches");
         return true;
       }
@@ -80,7 +116,11 @@ class ReactionHandler extends EventEmitter {
    * @param {GuildEmoji | ReactionEmoji} emoji The emoji object containing its name and its ID
    * @param {string} reactorId The user ID of the member who subtracted his reaction from this message
    */
-  private checkRemovePreConditions(msg: Message | PartialMessage, emoji: GuildEmoji | ReactionEmoji, reactorId: string): boolean {
+  private checkRemovePreConditions(
+    msg: Message | PartialMessage,
+    emoji: GuildEmoji | ReactionEmoji,
+    reactorId: string,
+  ): boolean {
     if (this.message.id !== msg.id) {
       return false;
     }
@@ -114,10 +154,16 @@ class ReactionHandler extends EventEmitter {
   }
 }
 
-export const collectReactions = (message: Message, filter: (userId: string) => boolean, options: ReactionHandlerOptions): Promise<CollectedReaction[]> => {
+export const collectReactions = (
+  message: Message,
+  filter: (userId: string) => boolean,
+  options: ReactionHandlerOptions,
+): Promise<CollectedReaction[]> => {
   const bulkCollector = new ReactionHandler(message, filter, false, options);
   return new Promise((resolve) => {
-    bulkCollector.on("end", (collected: CollectedReaction[]) => resolve(collected));
+    bulkCollector.on("end", (collected: CollectedReaction[]) =>
+      resolve(collected),
+    );
   });
 };
 

@@ -42,7 +42,7 @@ export default createBaseCommand({
     const channels = await Promise.all(
       guilds.map(async (guild: any) => {
         const settings = await this.client.repo.GetGuildClientSettings(
-          guild.id
+          guild.id,
         );
         try {
           return this.client.repo.GetGuildChannel(settings.channelId);
@@ -51,7 +51,7 @@ export default createBaseCommand({
           console.trace(e);
           return null;
         }
-      })
+      }),
     );
 
     const onAccept = this.handleAcceptance({
@@ -92,21 +92,24 @@ export default createBaseCommand({
           unreachableGuilds.length
             ? ` Unreachable servers: ${unreachableGuilds.join(", ")}`
             : ""
-        }`
+        }`,
       });
 
       for (const channel of targetChannels) {
         if (channel) {
           await channel.send({
-            content: `Your **Komvos** network \`${network.uuid}\` ` +
-              `has been **DISBANDED** by ${announcementsChannel.guild!.name}.`
+            content:
+              `Your **Komvos** network \`${network.uuid}\` ` +
+              `has been **DISBANDED** by ${announcementsChannel.guild!.name}.`,
           });
         }
       }
     };
   },
 
-  handleRejection: function ({ announcementsChannel }: HandleRejectionParams): () => Promise<void> {
+  handleRejection: function ({
+    announcementsChannel,
+  }: HandleRejectionParams): () => Promise<void> {
     return async () => {
       await announcementsChannel.send({ content: "OK, boss." });
     };

@@ -61,8 +61,13 @@ async function BroadcastBanRevokeReport({
 
   for (const networkGuild of networkGuilds) {
     try {
-      const settings = await client.repo.GetGuildClientSettings(networkGuild.id);
-      const guildChannel = client.repo.GetGuildChannel(networkGuild.id, settings.channelId);
+      const settings = await client.repo.GetGuildClientSettings(
+        networkGuild.id,
+      );
+      const guildChannel = client.repo.GetGuildChannel(
+        networkGuild.id,
+        settings.channelId,
+      );
       if (guildChannel) {
         channels.push(guildChannel);
       }

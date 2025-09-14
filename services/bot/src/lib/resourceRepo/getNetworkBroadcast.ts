@@ -1,4 +1,4 @@
-import type { Sql } from 'postgres';
+import type { Sql } from "postgres";
 
 interface NetworkBroadcastResult {
   banned_id: string;
@@ -14,10 +14,12 @@ interface GetNetworkBroadcastFunction {
   (networkId: number, bannedId: string): Promise<NetworkBroadcastResult[]>;
 }
 
-export default function getNetworkBroadcastRepository(sql: Sql): GetNetworkBroadcastFunction {
+export default function getNetworkBroadcastRepository(
+  sql: Sql,
+): GetNetworkBroadcastFunction {
   return async function getNetworkBroadcast(
     networkId: number,
-    bannedId: string
+    bannedId: string,
   ): Promise<NetworkBroadcastResult[]> {
     return await sql<NetworkBroadcastResult[]>`
       SELECT

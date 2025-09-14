@@ -36,7 +36,7 @@ export default createBaseCommand({
 
     if (network.owning_guild_id === this.guild!.id) {
       throw new CommandError(
-        "A network admin cannot leave a network, only disband it."
+        "A network admin cannot leave a network, only disband it.",
       );
     }
 
@@ -45,7 +45,7 @@ export default createBaseCommand({
 
     try {
       const settings = await this.client.repo.GetGuildClientSettings(
-        targetGuild.id
+        targetGuild.id,
       );
       targetChannel = this.client.repo.GetGuildChannel(settings.channelId);
     } catch (e) {
@@ -95,23 +95,27 @@ export default createBaseCommand({
     return async () => {
       await RemoveGuildFromNetwork(guild.id, network.id);
       await announcementsChannel.send({
-        content: `You left network **\`${network.uuid}\`**. You will no longer receive broadcasts from it. ` +
+        content:
+          `You left network **\`${network.uuid}\`**. You will no longer receive broadcasts from it. ` +
           (guild ? `Server **${targetGuild.name}** has been notified.` : "") +
           (!targetChannel
             ? ` Server **${targetGuild.name}** was **NOT** notified as there is NO ` +
               `announcements channel setup on that server.`
-            : "")
+            : ""),
       });
 
       if (targetChannel)
         await targetChannel.send({
-          content: `Server **${guild.name}** has left your network. ` +
-            `You will receive no more notifications from them.`
+          content:
+            `Server **${guild.name}** has left your network. ` +
+            `You will receive no more notifications from them.`,
         });
     };
   },
 
-  handleRejection: function ({ announcementsChannel }: HandleRejectionParams): () => Promise<void> {
+  handleRejection: function ({
+    announcementsChannel,
+  }: HandleRejectionParams): () => Promise<void> {
     return async () => {
       await announcementsChannel.send({ content: "OK, boss." });
     };

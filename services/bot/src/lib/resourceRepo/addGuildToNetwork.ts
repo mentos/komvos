@@ -1,11 +1,13 @@
-import type { Sql } from 'postgres';
-import type { AddGuildToNetworkParams } from '../../types/database';
+import type { Sql } from "postgres";
+import type { AddGuildToNetworkParams } from "../../types/database";
 
 interface AddGuildToNetworkFunction {
   (params: AddGuildToNetworkParams): Promise<void>;
 }
 
-export default function addGuildToNetworkRepository(sql: Sql): AddGuildToNetworkFunction {
+export default function addGuildToNetworkRepository(
+  sql: Sql,
+): AddGuildToNetworkFunction {
   return async function addGuildToNetwork({
     guild_id,
     network_id,

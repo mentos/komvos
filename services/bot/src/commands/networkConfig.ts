@@ -28,26 +28,32 @@ export default createBaseCommand({
 
       if (!settings.channelId) {
         await this.channel.send({
-          embeds: [failureEmbed({
-            command: false,
-            description: "No channel was found",
-            fields: [],
-            imageURL: null,
-          })],
+          embeds: [
+            failureEmbed({
+              command: false,
+              description: "No channel was found",
+              fields: [],
+              imageURL: null,
+            }),
+          ],
         });
         return;
       }
 
-      const _channel = this.guild!.channels.cache.get(settings.channelId) as TextChannel;
+      const _channel = this.guild!.channels.cache.get(
+        settings.channelId,
+      ) as TextChannel;
 
       if (!_channel) {
         await this.channel.send({
-          embeds: [failureEmbed({
-            command: false,
-            description: "No channel was found",
-            fields: [],
-            imageURL: null,
-          })],
+          embeds: [
+            failureEmbed({
+              command: false,
+              description: "No channel was found",
+              fields: [],
+              imageURL: null,
+            }),
+          ],
         });
         return;
       }
@@ -69,18 +75,26 @@ export default createBaseCommand({
       await this.replyWithConfig!(
         "Channel Permissions Check",
         permissions
-          .map((s) => `\`${s}\`: ${_permissions.has(PermissionsBitField.Flags[s]) ? "OK" : "No permissions"}`)
-          .join("\n")
+          .map(
+            (s) =>
+              `\`${s}\`: ${_permissions.has(PermissionsBitField.Flags[s]) ? "OK" : "No permissions"}`,
+          )
+          .join("\n"),
       );
 
       const guildPermissions = this.guild!.members.me?.permissions;
       if (guildPermissions) {
-        const allPermissions = Object.keys(PermissionsBitField.Flags) as (keyof typeof PermissionsBitField.Flags)[];
+        const allPermissions = Object.keys(
+          PermissionsBitField.Flags,
+        ) as (keyof typeof PermissionsBitField.Flags)[];
         await this.replyWithConfig!(
           "Server Permissions Check",
           allPermissions
-            .map((s) => `\`${s}\`: ${guildPermissions.has(PermissionsBitField.Flags[s]) ? "OK" : "No permissions"}`)
-            .join("\n")
+            .map(
+              (s) =>
+                `\`${s}\`: ${guildPermissions.has(PermissionsBitField.Flags[s]) ? "OK" : "No permissions"}`,
+            )
+            .join("\n"),
         );
       }
       return;
@@ -96,12 +110,14 @@ export default createBaseCommand({
 
     if (isEmpty(key)) {
       await this.channel.send({
-        embeds: [failureEmbed({
-          command: true,
-          description: `**Proper usage:** \`${this.usage}\`.`,
-          fields: [],
-          imageURL: null,
-        })],
+        embeds: [
+          failureEmbed({
+            command: true,
+            description: `**Proper usage:** \`${this.usage}\`.`,
+            fields: [],
+            imageURL: null,
+          }),
+        ],
       });
       return;
     }
@@ -127,7 +143,7 @@ export default createBaseCommand({
 
       if (/<#(\d+)>/.test(value || ""))
         throw new CommandArgumentError(
-          "Cannot use channel id for this config."
+          "Cannot use channel id for this config.",
         );
     }
 
@@ -136,13 +152,13 @@ export default createBaseCommand({
     const channel =
       key === Constants.SETTINGS_CHANNEL_ID &&
       this.client.repo.GetGuildChannel(
-        isEmpty(value) ? settings.channelId : value!
+        isEmpty(value) ? settings.channelId : value!,
       );
 
     const alertsChannel =
       key === Constants.SETTINGS_ALERTS_CHANNEL_ID &&
       this.client.repo.GetGuildChannel(
-        isEmpty(value) ? settings.alertsChannelId : value!
+        isEmpty(value) ? settings.alertsChannelId : value!,
       );
 
     const role: Role | null =
@@ -151,8 +167,8 @@ export default createBaseCommand({
             !clearValue && isEmpty(value)
               ? settings.reportedRoleId
               : clearValue
-              ? ""
-              : value!
+                ? ""
+                : value!,
           ) || null
         : null;
 
@@ -165,7 +181,8 @@ export default createBaseCommand({
     } else if (key === Constants.SETTINGS_ROLE_ID) {
       configReply = role ? `<@&${role.id}>` : "none";
     } else if (key === Constants.SETTINGS_ALLOW_INVITES) {
-      configReply = this.inviteLabels[settings[key] as keyof typeof this.inviteLabels];
+      configReply =
+        this.inviteLabels[settings[key] as keyof typeof this.inviteLabels];
     } else {
       configReply = (settings as any)[key] || "none";
     }
@@ -180,7 +197,7 @@ export default createBaseCommand({
       !["allow", "deny"].includes(value!)
     ) {
       throw new CommandArgumentError(
-        "Can only use `allow` or `deny` for this option."
+        "Can only use `allow` or `deny` for this option.",
       );
     }
 
@@ -213,13 +230,19 @@ export default createBaseCommand({
     };
   },
 
-  replyWithConfig: async function (key: string, value: string, title: string = "Komvos Settings"): Promise<void> {
+  replyWithConfig: async function (
+    key: string,
+    value: string,
+    title: string = "Komvos Settings",
+  ): Promise<void> {
     await this.channel.send({
-      embeds: [successEmbed({
-        fields: [[key + ":", value]],
-        title,
-        titlePrefix: "",
-      })],
+      embeds: [
+        successEmbed({
+          fields: [[key + ":", value]],
+          title,
+          titlePrefix: "",
+        }),
+      ],
     });
   },
 });

@@ -12,10 +12,7 @@
     "app:start:dev": "nodemon dist/index.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src/**/*.{js,ts}",
-    "lint:fix": "eslint src/**/*.{js,ts} --fix",
-    "prettify": "prettier --write ./**/*.{js,ts}"
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "bot",

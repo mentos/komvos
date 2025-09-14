@@ -1,29 +1,25 @@
-import { Guild, TextChannel } from "discord.js";
+import { TextChannel } from "discord.js";
 import { ExtendedClient } from "../client";
-import {
-  CommandArgumentError,
-  CommandTargetError,
-  CommandError,
-} from "../commands/base";
 import { isEmpty } from "../utils";
 
-export default (client: ExtendedClient) => (channelId: string): TextChannel | null => {
-  if (isEmpty(channelId)) {
-    return null;
-  }
+export default (client: ExtendedClient) =>
+  (channelId: string): TextChannel | null => {
+    if (isEmpty(channelId)) {
+      return null;
+    }
 
-  let channel;
+    let channel;
 
-  try {
-    channel = client.channels.cache.get(channelId) as TextChannel;
-  } catch {
-    // Channel not found or invalid
-    return null;
-  }
+    try {
+      channel = client.channels.cache.get(channelId) as TextChannel;
+    } catch {
+      // Channel not found or invalid
+      return null;
+    }
 
-  if (!channel || !client.utils.isGuildTextChannel(channel)) {
-    return null;
-  }
+    if (!channel || !client.utils.isGuildTextChannel(channel)) {
+      return null;
+    }
 
-  return channel;
-};
+    return channel;
+  };

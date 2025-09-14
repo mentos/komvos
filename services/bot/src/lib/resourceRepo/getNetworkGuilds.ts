@@ -1,15 +1,24 @@
-import type { Sql } from 'postgres';
-import type { NetworkGuildQueryResult, GetNetworkGuildsResult } from '../../types/database';
-import { CommandArgumentError } from '../../commands/base';
+import type { Sql } from "postgres";
+import type {
+  NetworkGuildQueryResult,
+  GetNetworkGuildsResult,
+} from "../../types/database";
+import { CommandArgumentError } from "../../commands/base";
 
 interface GetNetworkGuildsFunction {
   (networkId: number): Promise<GetNetworkGuildsResult>;
 }
 
-export default function getNetworkGuildsRepository(sql: Sql): GetNetworkGuildsFunction {
-  return async function getNetworkGuilds(networkId: number): Promise<GetNetworkGuildsResult> {
+export default function getNetworkGuildsRepository(
+  sql: Sql,
+): GetNetworkGuildsFunction {
+  return async function getNetworkGuilds(
+    networkId: number,
+  ): Promise<GetNetworkGuildsResult> {
     if (!networkId) {
-      throw new CommandArgumentError('Invalid argument: `networkId` is required.');
+      throw new CommandArgumentError(
+        "Invalid argument: `networkId` is required.",
+      );
     }
 
     const networkGuilds = await sql<NetworkGuildQueryResult[]>`

@@ -1,4 +1,12 @@
-import { Message, Guild, TextChannel, GuildMember, User, Collection, PermissionsBitField } from "discord.js";
+import {
+  Message,
+  Guild,
+  TextChannel,
+  GuildMember,
+  User,
+  Collection,
+  PermissionsBitField,
+} from "discord.js";
 import { failureEmbed } from "../lib/EmbedBuilder";
 import { isEmpty } from "../utils";
 import { ExtendedClient, ClientSettings } from "../client";
@@ -31,14 +39,23 @@ export interface ExtendedCommand extends BaseCommand {
   settings: ClientSettings;
 
   // Methods
-  run(parsedCommand: any, message: Message, client: ExtendedClient, settings: ClientSettings): Promise<void>;
+  run(
+    parsedCommand: any,
+    message: Message,
+    client: ExtendedClient,
+    settings: ClientSettings,
+  ): Promise<void>;
   preExec(): Promise<void>;
   validateGuildCooldowns(): void;
   validateMemberPermissions(): Promise<void>;
   validateChannelPermissions(): void;
   handleAcceptance?: (...args: any[]) => (...args: any[]) => Promise<void>;
   handleRejection?: (...args: any[]) => (...args: any[]) => Promise<void>;
-  replyWithConfig?: (key: string, value: string, title?: string) => Promise<void>;
+  replyWithConfig?: (
+    key: string,
+    value: string,
+    title?: string,
+  ) => Promise<void>;
 
   // Helper getters
   readonly inviteValues?: { [key: string]: boolean };
@@ -51,11 +68,18 @@ export interface ExtendedCommand extends BaseCommand {
   readonly guild: Guild | null;
 }
 
-export default function createBaseCommand(command: BaseCommand): ExtendedCommand {
+export default function createBaseCommand(
+  command: BaseCommand,
+): ExtendedCommand {
   const extendedCommand: any = {
     memberPermissions: ["SendMessages"],
 
-    run: async function (parsedCommand: any, message: Message, client: ExtendedClient, settings: ClientSettings): Promise<void> {
+    run: async function (
+      parsedCommand: any,
+      message: Message,
+      client: ExtendedClient,
+      settings: ClientSettings,
+    ): Promise<void> {
       try {
         extendedCommand.client = client;
         extendedCommand.message = message;
@@ -66,14 +90,16 @@ export default function createBaseCommand(command: BaseCommand): ExtendedCommand
         await extendedCommand.exec.call(extendedCommand);
       } catch (e: any) {
         await extendedCommand.channel.send({
-          embeds: [failureEmbed({
-            description:
-              e instanceof CommandError
-                ? e.message
-                : `Unknown error. See \`help\` for more information.`,
-            fields: [["Command usage", `\`${settings.prefix}help\``] as any],
-            imageURL: null,
-          })],
+          embeds: [
+            failureEmbed({
+              description:
+                e instanceof CommandError
+                  ? e.message
+                  : `Unknown error. See \`help\` for more information.`,
+              fields: [["Command usage", `\`${settings.prefix}help\``] as any],
+              imageURL: null,
+            }),
+          ],
         });
 
         console.trace(e);
@@ -81,7 +107,10 @@ export default function createBaseCommand(command: BaseCommand): ExtendedCommand
         // @TODO - Start: Move this to a utility
         console.info("🟡 DEBUG INFO:");
 
-        let author = extendedCommand.client.utils.getUserTag(extendedCommand.message?.author) || "N/A";
+        let author =
+          extendedCommand.client.utils.getUserTag(
+            extendedCommand.message?.author,
+          ) || "N/A";
         let channel = extendedCommand.message?.channel?.id || "N/A";
         let guild = extendedCommand.message?.guild?.name || "N/A";
 
@@ -103,7 +132,8 @@ export default function createBaseCommand(command: BaseCommand): ExtendedCommand
     validateGuildCooldowns: function (): void {
       if (!extendedCommand.guildCooldown) return;
 
-      const commandCooldowns: Collection<string, number> | undefined = extendedCommand.client.guildsCooldowns.get(extendedCommand.name);
+      const commandCooldowns: Collection<string, number> | undefined =
+        extendedCommand.client.guildsCooldowns.get(extendedCommand.name);
       if (!commandCooldowns) return;
 
       const cooldownAmount = extendedCommand.guildCooldown * 1000;
@@ -113,7 +143,8 @@ export default function createBaseCommand(command: BaseCommand): ExtendedCommand
       if (!guildId) return;
 
       if (commandCooldowns.has(guildId)) {
-        const expiration = (commandCooldowns.get(guildId) || 0) + cooldownAmount;
+        const expiration =
+          (commandCooldowns.get(guildId) || 0) + cooldownAmount;
 
         if (now < expiration) {
           const timeLeft = (expiration - now) / 1000;
@@ -121,7 +152,7 @@ export default function createBaseCommand(command: BaseCommand): ExtendedCommand
 
           throw new CommandMemberPermissionsError(
             `**Command on server cooldown.** Please wait ${remaining} ` +
-              `more second(s) before reusing \`${extendedCommand.name}\`.`
+              `more second(s) before reusing \`${extendedCommand.name}\`.`,
           );
         }
       }
@@ -139,24 +170,32 @@ export default function createBaseCommand(command: BaseCommand): ExtendedCommand
       const member = extendedCommand.member;
       if (!member) return;
 
-      const hasPermission = extendedCommand.memberPermissions?.some((permission: any) =>
-        extendedCommand.client.utils.memberHasPermission(member, permission)
+      const hasPermission = extendedCommand.memberPermissions?.some(
+        (permission: any) =>
+          extendedCommand.client.utils.memberHasPermission(member, permission),
       );
 
       if (!hasPermission) {
         throw new CommandMemberPermissionsError(
           "**Insufficient permissions.** " +
             "Only users with one of the following permissions can use this command: " +
-            (extendedCommand.memberPermissions?.map((p: any) => `\`${p}\``).join(", ") || "") +
-            "."
+            (extendedCommand.memberPermissions
+              ?.map((p: any) => `\`${p}\``)
+              .join(", ") || "") +
+            ".",
         );
       }
     },
 
     validateChannelPermissions: function (): void {
-      if (extendedCommand.guildOnly && !extendedCommand.client.utils.isGuildTextChannel(extendedCommand.channel)) {
+      if (
+        extendedCommand.guildOnly &&
+        !extendedCommand.client.utils.isGuildTextChannel(
+          extendedCommand.channel,
+        )
+      ) {
         throw new CommandChannelPermissionsError(
-          "This command is only allowed in server text channels."
+          "This command is only allowed in server text channels.",
         );
       }
     },

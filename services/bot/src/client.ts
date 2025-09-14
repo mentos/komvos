@@ -10,7 +10,7 @@ import {
   GuildMember,
   User,
   Message,
-  Channel
+  Channel,
 } from "discord.js";
 
 // Define types for client extensions
@@ -19,12 +19,23 @@ export interface Command {
   description?: string;
   usage?: string;
   memberPermissions?: string[];
-  guildCooldown?: {
-    timeout: number;
-    limit: number;
-  } | number;
-  execute: (client: ExtendedClient, message: Message, args: string[]) => Promise<void> | void;
-  run: (parsed: any, message: Message, client: ExtendedClient, settings: ClientSettings) => Promise<void> | void;
+  guildCooldown?:
+    | {
+        timeout: number;
+        limit: number;
+      }
+    | number;
+  execute: (
+    client: ExtendedClient,
+    message: Message,
+    args: string[],
+  ) => Promise<void> | void;
+  run: (
+    parsed: any,
+    message: Message,
+    client: ExtendedClient,
+    settings: ClientSettings,
+  ) => Promise<void> | void;
 }
 
 export interface ClientSettings {
@@ -45,13 +56,19 @@ export interface ExtendedClient extends Client {
     GetGuildChannel: (channelId: string) => TextChannel | null;
     GetGuildClientSettings: (guildId: string) => ClientSettings;
     GetGuildsMutualMembers: (guildIds: string[]) => Promise<any>;
-    SetGuildClientSettings: (guildId: string, settings: Partial<ClientSettings>) => Promise<void>;
+    SetGuildClientSettings: (
+      guildId: string,
+      settings: Partial<ClientSettings>,
+    ) => Promise<void>;
   };
   utils: {
     isGuildTextChannel: (channel: Channel) => channel is TextChannel;
     getUserTag: (user: User) => string;
     getMemberTag: (member: GuildMember) => string;
-    memberHasPermission: (member: GuildMember, permission: keyof typeof PermissionsBitField.Flags) => boolean;
+    memberHasPermission: (
+      member: GuildMember,
+      permission: keyof typeof PermissionsBitField.Flags,
+    ) => boolean;
     getGuildFromMessage: (message: Message) => Guild | null;
   };
 }
@@ -75,18 +92,26 @@ client.guildsSettings = new Collection();
 client.repo = {
   GetGuild: require("./clientRepo/getGuild")(client),
   GetGuildChannel: require("./clientRepo/getGuildChannel")(client),
-  GetGuildClientSettings: require("./clientRepo/getGuildClientSettings")(client),
-  GetGuildsMutualMembers: require("./clientRepo/getGuildsMutualMembers")(client),
-  SetGuildClientSettings: require("./clientRepo/setGuildClientSettings")(client),
+  GetGuildClientSettings: require("./clientRepo/getGuildClientSettings")(
+    client,
+  ),
+  GetGuildsMutualMembers: require("./clientRepo/getGuildsMutualMembers")(
+    client,
+  ),
+  SetGuildClientSettings: require("./clientRepo/setGuildClientSettings")(
+    client,
+  ),
 };
 
 // Load commands
 const commandsDir = path.normalize(path.join(__dirname, ".", "commands"));
-const commandFiles = fs.readdirSync(commandsDir).filter(file => file.endsWith('.ts'));
+const commandFiles = fs
+  .readdirSync(commandsDir)
+  .filter((file) => file.endsWith(".ts"));
 
 for (const file of commandFiles) {
   const commandModule = require(`./commands/${file}`);
-  const command = commandModule.default || commandModule as Command;
+  const command = commandModule.default || (commandModule as Command);
 
   client.commands.set(command.name, command);
 
@@ -104,7 +129,9 @@ client.utils = {
 
   // Get user tag (username#discriminator or username for new format)
   getUserTag: (user: User): string => {
-    return user.discriminator === "0" ? user.username : `${user.username}#${user.discriminator}`;
+    return user.discriminator === "0"
+      ? user.username
+      : `${user.username}#${user.discriminator}`;
   },
 
   // Get member tag
@@ -113,14 +140,17 @@ client.utils = {
   },
 
   // Check member permissions
-  memberHasPermission: (member: GuildMember, permission: keyof typeof PermissionsBitField.Flags): boolean => {
+  memberHasPermission: (
+    member: GuildMember,
+    permission: keyof typeof PermissionsBitField.Flags,
+  ): boolean => {
     return member.permissions.has(PermissionsBitField.Flags[permission]);
   },
 
   // Get guild from message
   getGuildFromMessage: (message: Message): Guild | null => {
     return message.guild;
-  }
+  },
 };
 
 export default client;

@@ -1,18 +1,28 @@
-import type { Sql } from 'postgres';
+import type { Sql } from "postgres";
 import type {
   CreateNetworkResult,
   NetworkQueryResult,
   PassphraseQueryResult,
-  GuildSettings
-} from '../../types/database';
-const { generatePassword } = require('../../utils');
+  GuildSettings,
+} from "../../types/database";
+const { generatePassword } = require("../../utils");
 
 interface CreateNetworkFunction {
-  (guild: { id: string }, author: { id: string; tag: string }, clientSettings: GuildSettings): Promise<CreateNetworkResult>;
+  (
+    guild: { id: string },
+    author: { id: string; tag: string },
+    clientSettings: GuildSettings,
+  ): Promise<CreateNetworkResult>;
 }
 
-export default function createNetworkRepository(sql: Sql): CreateNetworkFunction {
-  return async function createNetwork(guild, author, clientSettings): Promise<CreateNetworkResult> {
+export default function createNetworkRepository(
+  sql: Sql,
+): CreateNetworkFunction {
+  return async function createNetwork(
+    guild,
+    author,
+    clientSettings,
+  ): Promise<CreateNetworkResult> {
     const passphrase = generatePassword();
 
     return await sql.begin(async (sql) => {
@@ -23,7 +33,7 @@ export default function createNetworkRepository(sql: Sql): CreateNetworkFunction
       `;
 
       if (!result) {
-        throw new Error('Failed to generate network credentials');
+        throw new Error("Failed to generate network credentials");
       }
 
       const { passphrase: hashedPassphrase, uuid } = result;
@@ -49,7 +59,7 @@ export default function createNetworkRepository(sql: Sql): CreateNetworkFunction
           creator_guild_id, id`;
 
       if (!networkResult) {
-        throw new Error('Failed to create network');
+        throw new Error("Failed to create network");
       }
 
       const { creator_guild_id: guild_id, id: network_id } = networkResult;
@@ -70,7 +80,7 @@ export default function createNetworkRepository(sql: Sql): CreateNetworkFunction
       await sql`
         INSERT INTO
           guilds_settings
-          ${sql(settings, 'guild_id', 'settings')}
+          ${sql(settings, "guild_id", "settings")}
         ON CONFLICT (guild_id)
         DO UPDATE SET settings = ${settings.settings}`;
 

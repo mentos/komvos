@@ -159,14 +159,14 @@ export type SqlConnection = any; // TODO: Import proper type from postgres when 
  * Repository factory function type
  */
 export type RepositoryFunction<TParams extends any[] = [], TReturn = any> = (
-  sql: SqlConnection
+  sql: SqlConnection,
 ) => (...args: TParams) => Promise<TReturn>;
 
 /**
  * Command error types
  */
 export interface CommandArgumentError extends Error {
-  name: 'CommandArgumentError';
+  name: "CommandArgumentError";
 }
 
 /**

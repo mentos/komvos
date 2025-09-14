@@ -1,5 +1,5 @@
-import { sql } from './sql';
-import pgErrorCodes, * as errorUtils from './pgErrorCodes';
+import { sql } from "./sql";
+import pgErrorCodes, * as errorUtils from "./pgErrorCodes";
 
 export { sql, pgErrorCodes, errorUtils };
 

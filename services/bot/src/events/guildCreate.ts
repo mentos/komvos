@@ -9,6 +9,6 @@ const repo = createRepositories(sql);
 export default (_client: ExtendedClient) => async (guild: Guild) => {
   await repo.UpdateGuildSettings({
     guild_id: guild.id,
-    settings: config.defaultClientSettings
+    settings: config.defaultClientSettings,
   });
 };

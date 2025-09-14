@@ -42,7 +42,7 @@ export default createBaseCommand({
     let targetChannel: TextChannel | null = null;
     try {
       const settings = await this.client.repo.GetGuildClientSettings(
-        targetGuild.id
+        targetGuild.id,
       );
       targetChannel = this.client.repo.GetGuildChannel(settings.channelId);
     } catch (e) {
@@ -90,22 +90,26 @@ export default createBaseCommand({
     return async () => {
       await RemoveGuildFromNetwork(targetGuild.id, network.id);
       await announcementsChannel.send({
-        content: `Server **${targetGuild.name}** is no longer part of your network.` +
+        content:
+          `Server **${targetGuild.name}** is no longer part of your network.` +
           (!targetChannel
             ? ` Server **${targetGuild.name}** was **NOT** notified as there is NO ` +
               `announcements channel setup on that server.`
-            : "")
+            : ""),
       });
 
       if (targetChannel)
         await targetChannel.send({
-          content: `You have been **kicked** from **Komvos** network: \`${network.uuid}\`. ` +
-            `You will receive no more notifications from this network.`
+          content:
+            `You have been **kicked** from **Komvos** network: \`${network.uuid}\`. ` +
+            `You will receive no more notifications from this network.`,
         });
     };
   },
 
-  handleRejection: function ({ announcementsChannel }: HandleRejectionParams): () => Promise<void> {
+  handleRejection: function ({
+    announcementsChannel,
+  }: HandleRejectionParams): () => Promise<void> {
     return async () => {
       await announcementsChannel.send({ content: "OK, boss." });
     };

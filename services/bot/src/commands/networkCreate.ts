@@ -18,7 +18,7 @@ export default createBaseCommand({
 
   exec: async function () {
     const channel = this.client.repo.GetGuildChannel(
-      this.parsedCommand.reader.getChannelID()
+      this.parsedCommand.reader.getChannelID(),
     );
 
     if (!channel) {
@@ -34,30 +34,36 @@ export default createBaseCommand({
         {
           ...settings,
           channelId: channel.id,
-        }
+        },
       );
 
       await this.channel.send({
-        embeds: [successEmbed({
-          title: "Your network is ready",
-          command: true,
-          description:
-            "Keep these information in a safe place and then delete this message.\n\n" +
-            "The `passphrase` is **required** for all `administrator` commands like `network-invite`, " +
-            "`network-disband`, `network-kick`, etc.",
-          fields: [
-            ["Network ID", `\`${uuid}\``, true],
-            ["Passphrase", `\`${passphrase}\``, true],
-            ["Announcements Channel", `<#${channel.id}>`, false],
-            ["Invitations", `\`k!network-invite [server id] ${passphrase}\``, false],
-          ],
-        })],
+        embeds: [
+          successEmbed({
+            title: "Your network is ready",
+            command: true,
+            description:
+              "Keep these information in a safe place and then delete this message.\n\n" +
+              "The `passphrase` is **required** for all `administrator` commands like `network-invite`, " +
+              "`network-disband`, `network-kick`, etc.",
+            fields: [
+              ["Network ID", `\`${uuid}\``, true],
+              ["Passphrase", `\`${passphrase}\``, true],
+              ["Announcements Channel", `<#${channel.id}>`, false],
+              [
+                "Invitations",
+                `\`k!network-invite [server id] ${passphrase}\``,
+                false,
+              ],
+            ],
+          }),
+        ],
       });
     } catch (e: any) {
       throw new CommandError(
         e.code === pgErrorCodes.UNIQUE_VIOLATION
           ? "You already are in a network."
-          : "An unknown error occurred. Please try again."
+          : "An unknown error occurred. Please try again.",
       );
     }
   },

@@ -1,6 +1,6 @@
 // Main type exports for the Komvos bot
 
-export * from './database';
+export * from "./database";
 
 /**
  * Common utility types
@@ -64,29 +64,29 @@ export interface CommandContext {
  * Ban reason constants
  */
 export const BAN_REASONS = {
-  ABUSER: 'Harassment, threatening behaviour or doxxing',
-  ADVERTISING: 'Advertising / invite posting',
-  BAN_EVASION: 'Ban Evasion, duplicate account or impersonation',
-  CHILD_SAFETY: 'Child Safety',
-  GRAPHIC_CONTENT: 'Graphic or illegal content',
-  RAIDING: 'Raiding',
-  SCAM_ILLEGAL_SERVICES: 'Scam, fraud or illegal services / cheating',
-  SPAMMING_TROLLING: 'Spamming / trolling',
-  MUTUAL_NETWORK: 'Follow up network ban'
+  ABUSER: "Harassment, threatening behaviour or doxxing",
+  ADVERTISING: "Advertising / invite posting",
+  BAN_EVASION: "Ban Evasion, duplicate account or impersonation",
+  CHILD_SAFETY: "Child Safety",
+  GRAPHIC_CONTENT: "Graphic or illegal content",
+  RAIDING: "Raiding",
+  SCAM_ILLEGAL_SERVICES: "Scam, fraud or illegal services / cheating",
+  SPAMMING_TROLLING: "Spamming / trolling",
+  MUTUAL_NETWORK: "Follow up network ban",
 } as const;
 
 export type BanReasonType = keyof typeof BAN_REASONS;
-export type BanReasonDescription = typeof BAN_REASONS[BanReasonType];
+export type BanReasonDescription = (typeof BAN_REASONS)[BanReasonType];
 
 /**
  * Settings constants
  */
 export const SETTINGS_KEYS = {
-  ALLOW_INVITES: 'allowInvites',
-  ALERTS_CHANNEL_ID: 'alertsChannelId',
-  CHANNEL_ID: 'channelId',
-  PREFIX: 'prefix',
-  ROLE_ID: 'reportedRoleId'
+  ALLOW_INVITES: "allowInvites",
+  ALERTS_CHANNEL_ID: "alertsChannelId",
+  CHANNEL_ID: "channelId",
+  PREFIX: "prefix",
+  ROLE_ID: "reportedRoleId",
 } as const;
 
-export type SettingsKey = typeof SETTINGS_KEYS[keyof typeof SETTINGS_KEYS];
+export type SettingsKey = (typeof SETTINGS_KEYS)[keyof typeof SETTINGS_KEYS];

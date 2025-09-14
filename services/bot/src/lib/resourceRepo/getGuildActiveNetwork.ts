@@ -1,12 +1,19 @@
-import type { Sql } from 'postgres';
-import type { Network, GetGuildActiveNetworkResult } from '../../types/database';
+import type { Sql } from "postgres";
+import type {
+  Network,
+  GetGuildActiveNetworkResult,
+} from "../../types/database";
 
 interface GetGuildActiveNetworkFunction {
   (guildId: string): Promise<GetGuildActiveNetworkResult>;
 }
 
-export default function getGuildActiveNetworkRepository(sql: Sql): GetGuildActiveNetworkFunction {
-  return async function getGuildActiveNetwork(guildId: string): Promise<GetGuildActiveNetworkResult> {
+export default function getGuildActiveNetworkRepository(
+  sql: Sql,
+): GetGuildActiveNetworkFunction {
+  return async function getGuildActiveNetwork(
+    guildId: string,
+  ): Promise<GetGuildActiveNetworkResult> {
     const [network] = await sql<Network[]>`
       SELECT
         networks.*

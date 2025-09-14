@@ -1,22 +1,22 @@
-import type { Sql } from 'postgres';
+import type { Sql } from "postgres";
 
 // Import all repository functions
-import addBanBroadcastRepository from './addBanBroadcast';
-import addGuildToNetworkRepository from './addGuildToNetwork';
-import createBanBroadcastRepository from './createBanBroadcast';
-import createNetworkRepository from './createNetwork';
-import deleteGuildSettingsRepository from './deleteGuildSettings';
-import disbandNetworkRepository from './disbandNetwork';
-import getBanBroadcastRepository from './getBanBroadcast';
-import getGuildActiveNetworkRepository from './getGuildActiveNetwork';
-import getGuildNetworksCountRepository from './getGuildNetworksCount';
-import getGuildOwnedNetworkRepository from './getGuildOwnedNetwork';
-import getNetworkBroadcastRepository from './getNetworkBroadcast';
-import getNetworkGuildIdForKickRepository from './getNetworkGuildIdForKick';
-import getNetworkGuildsRepository from './getNetworkGuilds';
-import removeGuildFromNetworkRepository from './removeGuildFromNetwork';
-import revokeBanBroadcastRepository from './revokeBanBroadcast';
-import updateGuildSettingsRepository from './updateGuildSettings';
+import addBanBroadcastRepository from "./addBanBroadcast";
+import addGuildToNetworkRepository from "./addGuildToNetwork";
+import createBanBroadcastRepository from "./createBanBroadcast";
+import createNetworkRepository from "./createNetwork";
+import deleteGuildSettingsRepository from "./deleteGuildSettings";
+import disbandNetworkRepository from "./disbandNetwork";
+import getBanBroadcastRepository from "./getBanBroadcast";
+import getGuildActiveNetworkRepository from "./getGuildActiveNetwork";
+import getGuildNetworksCountRepository from "./getGuildNetworksCount";
+import getGuildOwnedNetworkRepository from "./getGuildOwnedNetwork";
+import getNetworkBroadcastRepository from "./getNetworkBroadcast";
+import getNetworkGuildIdForKickRepository from "./getNetworkGuildIdForKick";
+import getNetworkGuildsRepository from "./getNetworkGuilds";
+import removeGuildFromNetworkRepository from "./removeGuildFromNetwork";
+import revokeBanBroadcastRepository from "./revokeBanBroadcast";
+import updateGuildSettingsRepository from "./updateGuildSettings";
 
 /**
  * Creates all repository functions with a given SQL connection

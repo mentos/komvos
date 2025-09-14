@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { ExtendedClient, ClientSettings } from "../client";
+import { ExtendedClient } from "../client";
 
 // Simple command parser to replace discord-command-parser
 interface ParsedCommand {
@@ -23,7 +23,7 @@ function parseCommand(message: Message, prefix: string): ParsedCommand {
     command,
     arguments: args,
     body: args.join(" "),
-    prefix
+    prefix,
   };
 }
 

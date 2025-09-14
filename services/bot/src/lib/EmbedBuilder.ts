@@ -103,11 +103,11 @@ class EmbedBuilder {
       throw new Error("The _title should not be longer than 256 characters.");
     if (this._description && this._description.length > 2048)
       throw new Error(
-        "The description should not be longer than 2048 characters."
+        "The description should not be longer than 2048 characters.",
       );
     if (this._color && (this._color < 0 || this._color > 0xffffff))
       throw new Error(
-        "Color must be a valid HEX-Color for HTML or be an integer within 0 - 16777215"
+        "Color must be a valid HEX-Color for HTML or be an integer within 0 - 16777215",
       );
     if (this._color && isNaN(this._color))
       throw new Error("Could not convert color to number.");
@@ -120,7 +120,7 @@ class EmbedBuilder {
         throw new Error("A field name may not be longer than 256 characters.");
       if (f.value.length > 1024)
         throw new Error(
-          "A field value may not be longer than 1024 characters."
+          "A field value may not be longer than 1024 characters.",
         );
     }
   }
@@ -145,7 +145,7 @@ class EmbedBuilder {
   description(description: string): EmbedBuilder {
     if (description.length > 2048)
       throw new Error(
-        "The description should not be longer than 2048 characters."
+        "The description should not be longer than 2048 characters.",
       );
     this._description = description;
     return this;
@@ -175,7 +175,7 @@ class EmbedBuilder {
     const numColor = parseInt(color.toString(), base);
     if (numColor < 0 || numColor > 0xffffff)
       throw new Error(
-        "Color must be a valid HEX-Color for HTML or be an integer within 0 - 16777215"
+        "Color must be a valid HEX-Color for HTML or be an integer within 0 - 16777215",
       );
     else if (numColor && isNaN(numColor))
       throw new Error("Could not convert color to number.");
@@ -231,11 +231,14 @@ class EmbedBuilder {
    * @param {number} [options.width] The image width.
    * @return {EmbedBuilder}
    */
-  thumbnail(url: string, options: { height?: number; width?: number } = {}): EmbedBuilder {
+  thumbnail(
+    url: string,
+    options: { height?: number; width?: number } = {},
+  ): EmbedBuilder {
     this._thumbnail = {
       url,
       height: options.height ?? null,
-      width: options.width ?? null
+      width: options.width ?? null,
     };
     return this;
   }
@@ -248,11 +251,14 @@ class EmbedBuilder {
    * @param {number} [options.width] The image width.
    * @return {EmbedBuilder}
    */
-  image(url: string, options: { height?: number; width?: number } = {}): EmbedBuilder {
+  image(
+    url: string,
+    options: { height?: number; width?: number } = {},
+  ): EmbedBuilder {
     this._image = {
       url,
       height: options.height ?? null,
-      width: options.width ?? null
+      width: options.width ?? null,
     };
     return this;
   }
@@ -281,7 +287,7 @@ class EmbedBuilder {
         [
           "The `[` and `]` around the argument mean it's **required**.",
           "The `(` and `)` around the argument mean it's **optional**.",
-        ].join("\n")
+        ].join("\n"),
       );
     }
 
@@ -293,7 +299,9 @@ class EmbedBuilder {
       footer: this._footer,
       image: this._image,
       thumbnail: this._thumbnail,
-      timestamp: this._timestamp ? new Date(this._timestamp).toISOString() : undefined,
+      timestamp: this._timestamp
+        ? new Date(this._timestamp).toISOString()
+        : undefined,
       title: this._title,
       url: this._url,
     };

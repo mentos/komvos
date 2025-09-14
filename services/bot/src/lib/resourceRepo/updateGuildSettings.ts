@@ -1,11 +1,13 @@
-import type { Sql } from 'postgres';
-import type { UpdateGuildSettingsParams } from '../../types/database';
+import type { Sql } from "postgres";
+import type { UpdateGuildSettingsParams } from "../../types/database";
 
 interface UpdateGuildSettingsFunction {
   (params: UpdateGuildSettingsParams): Promise<void>;
 }
 
-export default function updateGuildSettingsRepository(sql: Sql): UpdateGuildSettingsFunction {
+export default function updateGuildSettingsRepository(
+  sql: Sql,
+): UpdateGuildSettingsFunction {
   return async function updateGuildSettings({
     guild_id,
     settings,
@@ -18,7 +20,7 @@ export default function updateGuildSettingsRepository(sql: Sql): UpdateGuildSett
     await sql`
       INSERT INTO
         guilds_settings
-        ${sql(settingsData, 'guild_id', 'settings')}
+        ${sql(settingsData, "guild_id", "settings")}
       ON CONFLICT (guild_id)
       DO UPDATE SET
         settings = ${settingsData.settings},

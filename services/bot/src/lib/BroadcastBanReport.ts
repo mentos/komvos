@@ -1,4 +1,9 @@
-import { Guild, TextChannel, User, GuildMember, DiscordAPIError } from "discord.js";
+import {
+  Guild,
+  TextChannel,
+  User,
+  DiscordAPIError,
+} from "discord.js";
 import * as Constants from "../constants";
 import EmbedBuilder from "./EmbedBuilder";
 import ReactionHandler from "./ReactionHandler";
@@ -48,18 +53,22 @@ const REPORT_OPTIONS: Record<string, string> = {
   "9️⃣": Constants.REPORT_MUTUAL_NETWORK,
 };
 
-const checkBanPresence = (tag: string) => (guild: Guild) => (channel: TextChannel) => async (userId: string): Promise<void> => {
-  try {
-    await guild.bans.fetch(userId);
-  } catch (e) {
-    if (e instanceof DiscordAPIError && e.code === 10026) {
-      const description = `⛔ _Cannot find ban for ${tag}_`;
-      const embed = new EmbedBuilder({ description }).sendable;
-      await channel.send({ embeds: [embed] });
+const checkBanPresence =
+  (tag: string) =>
+  (guild: Guild) =>
+  (channel: TextChannel) =>
+  async (userId: string): Promise<void> => {
+    try {
+      await guild.bans.fetch(userId);
+    } catch (e) {
+      if (e instanceof DiscordAPIError && e.code === 10026) {
+        const description = `⛔ _Cannot find ban for ${tag}_`;
+        const embed = new EmbedBuilder({ description }).sendable;
+        await channel.send({ embeds: [embed] });
+      }
+      throw e;
     }
-    throw e;
-  }
-};
+  };
 
 export default async function BroadcastBanReport({
   banReason,
@@ -77,7 +86,10 @@ export default async function BroadcastBanReport({
     channel = guildChannel;
   } else {
     const settings = await client.repo.GetGuildClientSettings(guild.id);
-    const foundChannel = client.repo.GetGuildChannel(guild.id, settings.channelId);
+    const foundChannel = client.repo.GetGuildChannel(
+      guild.id,
+      settings.channelId,
+    );
     if (!foundChannel) {
       throw new CommandError("Komvos could not find a notifications channel.");
     }
@@ -87,7 +99,7 @@ export default async function BroadcastBanReport({
   const banBroadcast = await GetBanBroadcast(
     network.id,
     bannedUser.id,
-    guild.id
+    guild.id,
   );
 
   if (!isEmpty(banBroadcast)) {
@@ -147,19 +159,21 @@ export default async function BroadcastBanReport({
   ];
 
   const report = await channel.send({
-    embeds: [new EmbedBuilder({
-      description,
-      fields,
-      image: { url: bannedUser.displayAvatarURL() },
-      title: "Broadcast this ban to network?",
-    }).sendable],
+    embeds: [
+      new EmbedBuilder({
+        description,
+        fields,
+        image: { url: bannedUser.displayAvatarURL() },
+        title: "Broadcast this ban to network?",
+      }).sendable,
+    ],
   });
 
   const reactionListener = new ReactionHandler(
     report,
     (userId) => userId !== report.author.id,
     false,
-    { time: 300000 }
+    { time: 300000 },
   );
   const reactions = [...Object.keys(REPORT_OPTIONS), "✅"];
 
@@ -170,7 +184,7 @@ export default async function BroadcastBanReport({
   reactionListener.on("reacted", async (event: any) => {
     const reactionsLength = reactionListener.collected.filter(
       ({ emoji }) =>
-        emoji.name !== "✅" && Object.keys(REPORT_OPTIONS).includes(emoji.name)
+        emoji.name !== "✅" && Object.keys(REPORT_OPTIONS).includes(emoji.name),
     ).length;
     if (event.emoji.name === "✅" && reactionsLength > 0) {
       await banValidator(bannedUser.id);
@@ -209,10 +223,12 @@ export default async function BroadcastBanReport({
     // Get network guilds' channel for broadcast
     for (const networkGuild of guildsForBroadcast) {
       try {
-        const settings = await client.repo.GetGuildClientSettings(networkGuild.id);
+        const settings = await client.repo.GetGuildClientSettings(
+          networkGuild.id,
+        );
         const guildChannel = client.repo.GetGuildChannel(
           networkGuild.id,
-          settings.channelId
+          settings.channelId,
         );
         if (guildChannel) {
           channels.push(guildChannel);
@@ -258,17 +274,23 @@ export default async function BroadcastBanReport({
     for (const gchannel of channels) {
       try {
         await gchannel.send({
-          embeds: [new EmbedBuilder({
-            author: {
-              icon_url: guild.iconURL() || undefined,
-              name: guild.name,
-            },
-            description,
-            fields,
-            footer: { text: `Network ID: ${network.uuid}` },
-            image: { url: bannedUser.displayAvatarURL(), height: 50, width: 50 },
-            title: "Network Ban Broadcast",
-          }).sendable],
+          embeds: [
+            new EmbedBuilder({
+              author: {
+                icon_url: guild.iconURL() || undefined,
+                name: guild.name,
+              },
+              description,
+              fields,
+              footer: { text: `Network ID: ${network.uuid}` },
+              image: {
+                url: bannedUser.displayAvatarURL(),
+                height: 50,
+                width: 50,
+              },
+              title: "Network Ban Broadcast",
+            }).sendable,
+          ],
         });
       } catch (e) {
         invalidGuildChannels.push(gchannel.guild.name);
@@ -277,18 +299,20 @@ export default async function BroadcastBanReport({
     }
 
     await channel.send({
-      embeds: [new EmbedBuilder({
-        description:
-          `✅ _**Ban for ${banInfo.banned_tag} broadcasted to network**_` +
-          (invalidGuildChannels.length
-            ? "\n\n **Note:** There was a problem broadcasting to the following servers:\n" +
-              invalidGuildChannels
-                .map((g) => `- ${g}`)
-                .sort()
-                .join(", ") +
-              "."
-            : ""),
-      }).sendable],
+      embeds: [
+        new EmbedBuilder({
+          description:
+            `✅ _**Ban for ${banInfo.banned_tag} broadcasted to network**_` +
+            (invalidGuildChannels.length
+              ? "\n\n **Note:** There was a problem broadcasting to the following servers:\n" +
+                invalidGuildChannels
+                  .map((g) => `- ${g}`)
+                  .sort()
+                  .join(", ") +
+                "."
+              : ""),
+        }).sendable,
+      ],
     });
   });
 }
