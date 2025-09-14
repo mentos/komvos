@@ -28,8 +28,7 @@ Default bot prefix: `k!`.
 
 1. Add bot to your server: `https://discord.com/api/oauth2/authorize?client_id=<DISCORD_APP_CLIENT_ID>&permissions=224452&scope=bot`
 2. `k!network-create [channel id]`
-2. `k!network-invite [server id] [passphrase]`
-
+3. `k!network-invite [server id] [passphrase]`
 
 ## Commands
 
@@ -120,16 +119,16 @@ k!network-leave [server id] // for owining servers
 
 Reasons for broadcasting a ban to a network:
 
-| TYPE | DESCRIPTION |
-|-|-|
-| ABUSER | Harrasment, threatening behaviour or doxxing |
-| ADVERTISING | Advertising or link posting |
-| BAN_EVASION | Ban Evasion (eg. secondary accounts) |
-| CHILD_SAFETY | Child Safety |
-| GRAPHIC_CONTENT | Graphic Content |
-| RAIDING | Raiding |
-| SCAM_ILLEGAL_SERVICES | Scam, fraud or illegal sales / services |
-| SPAMMING_TROLLING | Spamming or trolling |
+| TYPE                  | DESCRIPTION                                  |
+| --------------------- | -------------------------------------------- |
+| ABUSER                | Harrasment, threatening behaviour or doxxing |
+| ADVERTISING           | Advertising or link posting                  |
+| BAN_EVASION           | Ban Evasion (eg. secondary accounts)         |
+| CHILD_SAFETY          | Child Safety                                 |
+| GRAPHIC_CONTENT       | Graphic Content                              |
+| RAIDING               | Raiding                                      |
+| SCAM_ILLEGAL_SERVICES | Scam, fraud or illegal sales / services      |
+| SPAMMING_TROLLING     | Spamming or trolling                         |
 
 ## Supported Client Events
 

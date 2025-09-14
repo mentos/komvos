@@ -28,12 +28,7 @@
     "incremental": true,
     "composite": true
   },
-  "exclude": [
-    "node_modules",
-    "**/dist",
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ],
+  "exclude": ["node_modules", "**/dist", "**/*.spec.ts", "**/*.test.ts"],
   "references": [
     {
       "path": "./services/komvos-bot"

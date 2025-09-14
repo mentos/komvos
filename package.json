@@ -13,9 +13,9 @@
     "build": "pnpm -r build",
     "build:watch": "pnpm --filter @komvos/bot build:watch",
     "typecheck": "pnpm -r typecheck",
-    "lint": "pnpm -r lint",
-    "lint:fix": "pnpm -r lint:fix",
-    "prettify": "pnpm -r prettify"
+    "lint": "eslint \"**/*.{js,ts}\"",
+    "lint:fix": "eslint \"**/*.{js,ts}\" --fix",
+    "prettify": "prettier --write \"**/*.{js,ts,json,md}\" --ignore-path .gitignore"
   },
   "keywords": [
     "monorepo",
