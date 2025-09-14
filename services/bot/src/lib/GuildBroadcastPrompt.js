@@ -1,5 +1,5 @@
 const Constants = require("../constants");
-const ReactionHandler = require("../lib/ReactionHandler");
+const ReactionHandler = require("./ReactionHandler");
 
 class GuildBroadcastPrompt {
   constructor({
@@ -35,7 +35,7 @@ class GuildBroadcastPrompt {
       .send(
         typeof this.promptContent === "string"
           ? this.promptContent
-          : { ...this.promptContent }
+          : { ...this.promptContent },
       )
       .then(async (m) => {
         await m.addReaction(Constants.PROMPT_ACCEPT_EMOJI);
@@ -47,7 +47,7 @@ class GuildBroadcastPrompt {
       this.promptMessage,
       (userId) => userId !== this.promptMessage.author.id,
       false,
-      { maxMatches: 1, time: this.time }
+      { maxMatches: 1, time: this.time },
     );
 
     reactionListener.on("end", async (collected, reason) => {

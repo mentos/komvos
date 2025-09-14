@@ -1,11 +1,11 @@
-const EmbedBuilder = require("../lib/EmbedBuilder");
+const EmbedBuilder = require("./EmbedBuilder");
 const { isEmpty } = require("../utils");
 const {
   GetBanBroadcast,
   GetGuildActiveNetwork,
   GetNetworkGuilds,
   RevokeBanBroadcast,
-} = require("../lib/resourceRepo/index");
+} = require("./resourceRepo/index");
 
 async function BroadcastBanRevokeReport({
   bannedUserId,
@@ -18,7 +18,7 @@ async function BroadcastBanRevokeReport({
   const banBroadcast = await GetBanBroadcast(
     network.id,
     bannedUserId,
-    guild.id
+    guild.id,
   );
 
   if (isEmpty(banBroadcast)) {
@@ -64,30 +64,34 @@ async function BroadcastBanRevokeReport({
 
   for (const gchannel of channels) {
     await gchannel.send({
-      embeds: [new EmbedBuilder({
-        author: {
-          icon_url: guild.iconURL(),
-          name: guild.name,
-        },
-        description:
-          `**User:** ${tag}\n**ID:** ${banBroadcast.banned_id}` +
-          (reason ? `\n\n:small_blue_diamond: **Reason:** ${reason}.` : ""),
-        footer: { text: `Network ID: ${network.uuid}` },
-        title: "🔔 Ban Revoke",
-      }).sendable],
+      embeds: [
+        new EmbedBuilder({
+          author: {
+            icon_url: guild.iconURL(),
+            name: guild.name,
+          },
+          description:
+            `**User:** ${tag}\n**ID:** ${banBroadcast.banned_id}` +
+            (reason ? `\n\n:small_blue_diamond: **Reason:** ${reason}.` : ""),
+          footer: { text: `Network ID: ${network.uuid}` },
+          title: "🔔 Ban Revoke",
+        }).sendable,
+      ],
     });
   }
 
   await channel.send({
-    embeds: [new EmbedBuilder({
-      description:
-        `✅ _**Ban revoke for ${banBroadcast.banned_tag} was broadcasted to network**_` +
-        (invalidGuildChannels.length
-          ? "\n\n :small_blue_diamond: **Note:** was not able to broadcast to servers: " +
-            invalidGuildChannels.map((g) => `${g}`).join(", ") +
-            "."
-          : ""),
-    }).sendable],
+    embeds: [
+      new EmbedBuilder({
+        description:
+          `✅ _**Ban revoke for ${banBroadcast.banned_tag} was broadcasted to network**_` +
+          (invalidGuildChannels.length
+            ? "\n\n :small_blue_diamond: **Note:** was not able to broadcast to servers: " +
+              invalidGuildChannels.map((g) => `${g}`).join(", ") +
+              "."
+            : ""),
+      }).sendable,
+    ],
   });
 }
 

@@ -1,0 +1,53 @@
+{
+  "name": "@komvos/bot",
+  "version": "1.0.0",
+  "description": "A Discord bot for cross-server moderation (migrated to Discord.js).",
+  "main": "src/index.js",
+  "scripts": {
+    "app:monitor": "pm2 monit",
+    "app:reload": "pm2 reload komvos-bot",
+    "app:restart": "pm2 restart komvos-bot",
+    "app:start": "pm2 start src/index.js --name \"komvos-bot\" --log ./talos.log --time",
+    "app:stop": "pm2 stop komvos-bot",
+    "app:start:dev": "nodemon src/index.js",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/**/*.{js,ts}",
+    "lint:fix": "eslint src/**/*.{js,ts} --fix",
+    "prettify": "prettier --write ./**/*.{js,ts}"
+  },
+  "keywords": [
+    "bot",
+    "cross-server",
+    "discord",
+    "discord.js",
+    "moderation",
+    "networking"
+  ],
+  "author": "Ioannis Tziligkakis",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "just-camel-case": "^6.2.0",
+    "just-is-empty": "^3.4.1",
+    "pm2": "^5.4.2",
+    "postgres": "^3.4.4",
+    "prexit": "^0.0.5"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.25.1",
+    "@types/node": "^22.5.4",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
+    "better-logging": "^4.4.0",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
