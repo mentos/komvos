@@ -1,0 +1,16 @@
+export const PROMPT_ACCEPT_EMOJI = "👍";
+export const PROMPT_REJECT_EMOJI = "👎";
+export const REPORT_ABUSER = "Harassment, threatening behaviour or doxxing";
+export const REPORT_ADVERTISING = "Advertising / invite posting";
+export const REPORT_BAN_EVASION = "Ban Evasion, duplicate account or impersonation";
+export const REPORT_CHILD_SAFETY = "Child Safety";
+export const REPORT_GRAPHIC_CONTENT = "Graphic or illegal content";
+export const REPORT_RAIDING = "Raiding";
+export const REPORT_SCAM_ILLEGAL_SERVICES = "Scam, fraud or illegal services / cheating";
+export const REPORT_SPAMMING_TROLLING = "Spamming / trolling";
+export const REPORT_MUTUAL_NETWORK = "Follow up network ban";
+export const SETTINGS_ALLOW_INVITES = "allowInvites";
+export const SETTINGS_ALERTS_CHANNEL_ID = "alertsChannelId";
+export const SETTINGS_CHANNEL_ID = "channelId";
+export const SETTINGS_PREFIX = "prefix";
+export const SETTINGS_ROLE_ID = "reportedRoleId";
