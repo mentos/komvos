@@ -32,7 +32,7 @@ class GuildBroadcastPrompt {
 
   async send() {
     this.promptMessage = await this.targetChannel
-      .createMessage(
+      .send(
         typeof this.promptContent === "string"
           ? this.promptContent
           : { ...this.promptContent }
@@ -61,9 +61,9 @@ class GuildBroadcastPrompt {
 
   async handleExpiration() {
     if (this.expirationMessage)
-      await this.replyToChannel.createMessage(this.expirationMessage);
+      await this.replyToChannel.send(this.expirationMessage);
     if (this.targetExpirationMessage)
-      await this.targetChannel.createMessage(this.targetExpirationMessage);
+      await this.targetChannel.send(this.targetExpirationMessage);
   }
 
   async handleReaction(emojiName) {

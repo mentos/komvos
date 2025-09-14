@@ -60,7 +60,7 @@ module.exports = base({
       onReject,
       promptContent: {
         content:
-          `Your about to kick server **${targetGuild.name}** from your network \`${network.uuid}\`. **Are you sure?**` +
+          `You're about to kick server **${targetGuild.name}** from your network \`${network.uuid}\`. **Are you sure?**` +
           `${
             !targetChannel
               ? ` Server **${targetGuild.name}** **CANNNOT** be notified as ` +
@@ -81,7 +81,7 @@ module.exports = base({
   }) {
     return async () => {
       await RemoveGuildFromNetwork(targetGuild.id, network.id);
-      await announcementsChannel.createMessage(
+      await announcementsChannel.send(
         `Server **${targetGuild.name}** is no longer part of your network.` +
           (!targetChannel
             ? ` Server **${targetGuild.name}** was **NOT** notified as there is NO ` +
@@ -90,7 +90,7 @@ module.exports = base({
       );
 
       if (targetChannel)
-        await targetChannel.createMessage(
+        await targetChannel.send(
           `You have been **kicked** from **Komvos** network: \`${network.uuid}\`. ` +
             `You will receive no more notifications from this network.`
         );
@@ -99,7 +99,7 @@ module.exports = base({
 
   handleRejection: function ({ announcementsChannel }) {
     return async () => {
-      await announcementsChannel.createMessage("OK, boss.");
+      await announcementsChannel.send("OK, boss.");
     };
   },
 });

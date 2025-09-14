@@ -23,7 +23,7 @@ module.exports = base({
     let owner;
     try {
       owner = this.client.repo.GetGuild(network.owning_guild_id);
-    } catch (e) {
+    } catch {
       owner = "Owner unreachable";
     }
 
@@ -33,15 +33,15 @@ module.exports = base({
         try {
           const guild = this.client.repo.GetGuild(g.guild_id);
           return `⮩ ${truncate(guild.name)} _(${g.created_at.toDateString()})_`;
-        } catch (e) {
+        } catch {
           return unreachableGuilds.push(g.id);
         }
       })
       .sort()
       .join("\n");
 
-    this.channel.createMessage({
-      embed: successEmbed({
+    this.channel.send({
+      embeds: [successEmbed({
         title: "Network information",
         titlePrefix: "",
         description: `${description} ${
@@ -54,7 +54,7 @@ module.exports = base({
           ["Network Creation Date", network.established_at.toDateString()],
           ["Network Administrator", owner.name],
         ],
-      }),
+      })],
     });
   },
 });

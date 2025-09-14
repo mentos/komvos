@@ -1,6 +1,6 @@
 const { CommandArgumentError } = require("../commands/base");
 
-module.exports = (client) => async (guilds = [], userId) => {
+module.exports = (_client) => async (guilds = [], userId) => {
   if (!guilds.length) return [];
   if (!userId) {
     throw new CommandArgumentError("Invalid argument: `userId` is required.");

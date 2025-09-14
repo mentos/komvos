@@ -1,13 +1,29 @@
-const parser = require("discord-command-parser");
+// Simple command parser to replace discord-command-parser
+function parseCommand(message, prefix) {
+  if (!message.content.startsWith(prefix)) return { success: false };
+
+  const args = message.content.slice(prefix.length).trim().split(/ +/);
+  const command = args.shift().toLowerCase();
+
+  return {
+    success: true,
+    command,
+    arguments: args,
+    body: args.join(" "),
+    prefix
+  };
+}
 
 module.exports = (client) => async (message) => {
-  const settings = await client.repo.GetGuildClientSettings(message.guildID);
+  // Ignore bots
+  if (message.author.bot) return;
 
-  const parsed = parser.parse(message, settings.prefix, {
-    allowBots: false,
-    allowSpaceBeforeCommand: false,
-    ignorePrefixCase: false,
-  });
+  // Only process guild messages
+  if (!message.guild) return;
+
+  const settings = await client.repo.GetGuildClientSettings(message.guild.id);
+
+  const parsed = parseCommand(message, settings.prefix);
 
   if (!parsed.success) return;
 
@@ -15,6 +31,7 @@ module.exports = (client) => async (message) => {
 
   if (command === undefined) {
     // throw new Error(`Unknown command name: ${parsed.command}.`);
+    return;
   }
 
   try {

@@ -18,8 +18,8 @@ module.exports = (client) => (guildId) => {
     );
   }*/
 
-  // const guild = shard.client.guilds.get(guildId);
-  const guild = client.guilds.get(guildId);
+  // Discord.js uses cache.get() instead of get()
+  const guild = client.guilds.cache.get(guildId);
 
   if (isEmpty(guild)) {
     throw new CommandTargetError(

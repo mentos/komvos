@@ -10,7 +10,7 @@ module.exports = (client) => (guild, channelId, fallback = false) => {
     throw new CommandArgumentError("Invalid argument: `guild` is required.");
   }
 
-  if (isEmpty(channelId) && fallback && isEmpty(guild.systemChannelID)) {
+  if (isEmpty(channelId) && fallback && isEmpty(guild.systemChannelId)) {
     throw new CommandError(
       `Server **${guild.name}** has not setup an announcements channels for **Komvos**. ` +
         "Please let the server administrator know and try again when everything is setup."
@@ -27,8 +27,10 @@ module.exports = (client) => (guild, channelId, fallback = false) => {
   let channel;
 
   try {
-    channel = client.getChannel(channelId || guild.systemChannelID);
-  } catch (e) {}
+    channel = client.channels.cache.get(channelId || guild.systemChannelId);
+  } catch {
+    // Channel not found or invalid
+  }
 
   if (!channel) {
     throw new CommandTargetError(

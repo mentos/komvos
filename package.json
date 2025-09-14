@@ -1,7 +1,7 @@
 {
   "name": "komvos-bot",
   "version": "1.0.0",
-  "description": "A Discord bot for cross-server moderation.",
+  "description": "A Discord bot for cross-server moderation (migrated to Discord.js).",
   "main": "src/index.js",
   "scripts": {
     "app:monitor": "pm2 monit",
@@ -10,37 +10,36 @@
     "app:start": "pm2 start src/index.js --name \"komvos-bot\" --log ./talos.log --time",
     "app:stop": "pm2 stop komvos-bot",
     "app:start:dev": "nodemon src/index.js",
-    "lint": "eslint ./**/*.js",
-    "lint:fix": "eslint ./**/*.js --fix",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix",
     "prettify": "prettier --write ./**/*.js"
   },
   "keywords": [
     "bot",
     "cross-server",
     "discord",
-    "eris",
+    "discord.js",
     "moderation",
     "networking"
   ],
   "author": "Ioannis Tziligkakis",
   "license": "UNLICENSED",
   "dependencies": {
-    "discord-command-parser": "^1.5.1",
-    "dotenv": "^8.2.0",
-    "eris": "0.16.1",
-    "just-camel-case": "^4.0.2",
-    "just-is-empty": "^2.0.1",
-    "pm2": "^5.1.2",
-    "postgres": "^1.0.2",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "just-camel-case": "^6.2.0",
+    "just-is-empty": "^3.4.1",
+    "pm2": "^5.4.2",
+    "postgres": "^3.4.4",
     "prexit": "^0.0.5"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.25.1",
     "better-logging": "^4.4.0",
-    "eslint": "^7.13.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "nodemon": "^2.0.6",
-    "prettier": "^2.1.2"
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3"
   }
 }

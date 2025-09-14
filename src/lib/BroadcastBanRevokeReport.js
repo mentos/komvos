@@ -25,7 +25,7 @@ async function BroadcastBanRevokeReport({
     const description =
       "🔔 _Revoke broadcasts can be performed by original broadcasters or network administrator._";
     const embed = new EmbedBuilder({ color: 16763904, description }).sendable;
-    await channel.createMessage({ embed });
+    await channel.send({ embeds: [embed] });
     return;
   }
 
@@ -37,7 +37,7 @@ async function BroadcastBanRevokeReport({
       `🔔 _Cannot find a ban broadcast for user ID **${bannedUserId}**._ ` +
       `No need to take further action.`;
     const embed = new EmbedBuilder({ color: 16763904, description }).sendable;
-    await channel.createMessage({ embed });
+    await channel.send({ embeds: [embed] });
     return;
   }
 
@@ -63,10 +63,10 @@ async function BroadcastBanRevokeReport({
   await RevokeBanBroadcast(banBroadcast.id, new Date().toISOString(), guild.id);
 
   for (const gchannel of channels) {
-    await gchannel.createMessage({
-      embed: new EmbedBuilder({
+    await gchannel.send({
+      embeds: [new EmbedBuilder({
         author: {
-          icon_url: guild.iconURL,
+          icon_url: guild.iconURL(),
           name: guild.name,
         },
         description:
@@ -74,12 +74,12 @@ async function BroadcastBanRevokeReport({
           (reason ? `\n\n:small_blue_diamond: **Reason:** ${reason}.` : ""),
         footer: { text: `Network ID: ${network.uuid}` },
         title: "🔔 Ban Revoke",
-      }).sendable,
+      }).sendable],
     });
   }
 
-  await channel.createMessage({
-    embed: new EmbedBuilder({
+  await channel.send({
+    embeds: [new EmbedBuilder({
       description:
         `✅ _**Ban revoke for ${banBroadcast.banned_tag} was broadcasted to network**_` +
         (invalidGuildChannels.length
@@ -87,7 +87,7 @@ async function BroadcastBanRevokeReport({
             invalidGuildChannels.map((g) => `${g}`).join(", ") +
             "."
           : ""),
-    }).sendable,
+    }).sendable],
   });
 }
 

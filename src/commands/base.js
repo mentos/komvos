@@ -23,14 +23,14 @@ module.exports = function (command) {
         await this.preExec();
         await this.exec();
       } catch (e) {
-        await this.channel.createMessage({
-          embed: failureEmbed({
+        await this.channel.send({
+          embeds: [failureEmbed({
             description:
               e instanceof CommandError
                 ? e.message
                 : `Unknown error. See \`help\` for more information.`,
             fields: [["Command usage", `\`${settings.prefix}help\``]],
-          }),
+          })],
         });
 
         console.trace(e);
@@ -38,7 +38,7 @@ module.exports = function (command) {
         // @TODO - Start: Move this to a utility
         console.info("🟡 DEBUG INFO:");
 
-        let author = this.message?.author?.tag || "N/A";
+        let author = this.client.utils.getUserTag(this.message?.author) || "N/A";
         let channel = this.message?.channel?.id || "N/A";
         let guild = this.message?.guild?.name || "N/A";
 
@@ -87,7 +87,7 @@ module.exports = function (command) {
 
     validateMemberPermissions: async function () {
       if (isEmpty(this.memberPermissions)) return true;
-      if (!this.memberPermissions.some((p) => this.member.hasPermission(p))) {
+      if (!this.memberPermissions.some((p) => this.client.utils.memberHasPermission(this.member, p))) {
         throw new CommandMemberPermissionsError(
           "**Insufficient permissions.** " +
             "Only users with one of the following permissions can use this command: " +
@@ -98,7 +98,7 @@ module.exports = function (command) {
     },
 
     validateChannelPermissions: function () {
-      if (this.guildOnly && !this.channel.isGuildTextChannel) {
+      if (this.guildOnly && !this.client.utils.isGuildTextChannel(this.channel)) {
         throw new CommandChannelPermissionsError(
           "This command is only allowed in server text channels."
         );

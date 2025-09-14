@@ -30,6 +30,6 @@ module.exports = base({
       )
       .timestamp().sendable;
 
-    await this.channel.createMessage({ embed });
+    await this.channel.send({ embeds: [embed] });
   },
 });

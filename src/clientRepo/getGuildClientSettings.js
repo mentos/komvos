@@ -21,7 +21,7 @@ module.exports = (client) =>
           ...config.defaultClientSettings,
           ...JSON.parse(settings.settings),
         };
-      } catch (e) {
+      } catch {
         guildSettings = {
           ...config.defaultClientSettings,
         };

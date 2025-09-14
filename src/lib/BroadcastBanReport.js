@@ -30,7 +30,7 @@ const checkBanPresence = (tag) => (guild) => (channel) => async (userId) => {
     if (e.code === 10026) {
       const description = `⛔ _Cannot find ban for ${tag}_`;
       const embed = new EmbedBuilder({ description }).sendable;
-      await channel.createMessage({ embed });
+      await channel.send({ embeds: [embed] });
     }
     throw e;
   }
@@ -66,7 +66,7 @@ module.exports = async ({
       `🔔 _Broadcast for **${banBroadcast.banned_tag}** ` +
       `already sent to network on **${banBroadcast.created_at}**_`;
     const embed = new EmbedBuilder({ color: 16763904, description }).sendable;
-    await channel.createMessage({ embed });
+    await channel.send({ embeds: [embed] });
     return;
   }
 
@@ -117,14 +117,14 @@ module.exports = async ({
     { name: "Command", value: `k!ban-broadcast ${bannedUser.id}` },
   ];
 
-  const report = await channel.createMessage({
-    embed: new EmbedBuilder({
+  const report = await channel.send({
+    embeds: [new EmbedBuilder({
       description,
       fields,
-      image: { url: bannedUser.avatarURL },
+      image: { url: bannedUser.displayAvatarURL() },
       title: "Broadcast this ban to network?",
       titlePrefix: "",
-    }).sendable,
+    }).sendable],
   });
 
   const reactionListener = new ReactionHandler(
@@ -153,7 +153,7 @@ module.exports = async ({
   reactionListener.on("end", async (collected, reason) => {
     if (reason !== "accept") return;
     if (collected.length === 1) {
-      await channel.createMessage("You must react to at least one option.");
+      await channel.send("You must react to at least one option.");
       return;
     }
 
@@ -217,7 +217,7 @@ module.exports = async ({
           `🔔 _A broadcast for ${banInfo.banned_tag} ` +
           `already sent to network_`;
         const embed = new EmbedBuilder({ description }).sendable;
-        await channel.createMessage({ embed });
+        await channel.send({ embeds: [embed] });
       }
       throw e;
     }
@@ -227,18 +227,18 @@ module.exports = async ({
 
     for (const gchannel of channels) {
       try {
-        await gchannel.createMessage({
-          embed: new EmbedBuilder({
+        await gchannel.send({
+          embeds: [new EmbedBuilder({
             author: {
-              icon_url: guild.iconURL,
+              icon_url: guild.iconURL(),
               name: guild.name,
             },
             description,
             fields,
             footer: { text: `Network ID: ${network.uuid}` },
-            image: { url: bannedUser.avatarURL, height: 50, width: 50 },
+            image: { url: bannedUser.displayAvatarURL(), height: 50, width: 50 },
             title: "Network Ban Broadcast",
-          }).sendable,
+          }).sendable],
         });
       } catch (e) {
         invalidGuildChannels.push(gchannel.guild);
@@ -246,8 +246,8 @@ module.exports = async ({
       }
     }
 
-    await channel.createMessage({
-      embed: new EmbedBuilder({
+    await channel.send({
+      embeds: [new EmbedBuilder({
         description:
           `✅ _**Ban for ${banInfo.banned_tag} broadcasted to network**_` +
           (invalidGuildChannels.length
@@ -258,7 +258,7 @@ module.exports = async ({
                 .join(", ") +
               "."
             : ""),
-      }).sendable,
+      }).sendable],
     });
   });
 };

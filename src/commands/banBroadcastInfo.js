@@ -31,7 +31,7 @@ module.exports = base({
         color: 16763904,
         description: "**No network broadcasts were found for this member.**",
       }).sendable;
-      await this.channel.createMessage({ embed });
+      await this.channel.send({ embeds: [embed] });
       return;
     }
 
@@ -56,6 +56,6 @@ module.exports = base({
       title: "Network Ban Broadcast Info",
     }).sendable;
 
-    await this.channel.createMessage({ embed });
+    await this.channel.send({ embeds: [embed] });
   },
 });

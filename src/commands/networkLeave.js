@@ -64,7 +64,7 @@ module.exports = base({
       onReject,
       promptContent: {
         content:
-          `Your about to leave network \`${network.uuid}\` owned by server **${targetGuild.name}**. **Are you sure?**` +
+          `You're about to leave network \`${network.uuid}\` owned by server **${targetGuild.name}**. **Are you sure?**` +
           `${
             !targetChannel
               ? ` Server **${targetGuild.name}** **CANNNOT** be notified as ` +
@@ -86,9 +86,9 @@ module.exports = base({
   }) {
     return async () => {
       await RemoveGuildFromNetwork(guild.id, network.id);
-      await announcementsChannel.createMessage(
+      await announcementsChannel.send(
         `You left network **\`${network.uuid}\`**. You will no longer receive broadcasts from it. ` +
-          (!!guild ? `Server **${targetGuild.name}** has been notified.` : "") +
+          (guild ? `Server **${targetGuild.name}** has been notified.` : "") +
           (!targetChannel
             ? ` Server **${targetGuild.name}** was **NOT** notified as there is NO ` +
               `announcements channel setup on that server.`
@@ -96,7 +96,7 @@ module.exports = base({
       );
 
       if (targetChannel)
-        await targetChannel.createMessage(
+        await targetChannel.send(
           `Server **${guild.name}** has left your network. ` +
             `You will receive no more notifications from them.`
         );
@@ -105,7 +105,7 @@ module.exports = base({
 
   handleRejection: function ({ announcementsChannel }) {
     return async () => {
-      await announcementsChannel.createMessage("OK, boss.");
+      await announcementsChannel.send("OK, boss.");
     };
   },
 });

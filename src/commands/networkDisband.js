@@ -78,7 +78,7 @@ module.exports = base({
   }) {
     return async () => {
       await DisbandNetwork(network);
-      await announcementsChannel.createMessage(
+      await announcementsChannel.send(
         `Your network is now gone. ${
           unreachableGuilds.length
             ? `Unreachable servers: ${unreachableGuilds.join(", ")}`
@@ -86,9 +86,9 @@ module.exports = base({
         }`
       );
       for (const channel of targetChannels) {
-        await channel.createMessage(
+        await channel.send(
           `Your **Komvos** network \`${network.uuid}\` ` +
-            `has been **DISBANDED** by ${announcementsChannel.guild.namd}.`
+            `has been **DISBANDED** by ${announcementsChannel.guild.name}.`
         );
       }
     };
@@ -96,7 +96,7 @@ module.exports = base({
 
   handleRejection: function ({ announcementsChannel }) {
     return async () => {
-      await announcementsChannel.createMessage("OK, boss.");
+      await announcementsChannel.send("OK, boss.");
     };
   },
 });

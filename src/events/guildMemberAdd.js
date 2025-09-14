@@ -21,7 +21,7 @@ module.exports = (client) => async (guild, member) => {
   const role = guild.roles.get(settings.reportedRoleId);
 
   if (role) {
-    member.addRole(role.id, "Added by Komvos");
+    member.roles.add(role.id, "Added by Komvos");
   }
 
   const description = `> ${banBroadcast.reason || "No reason provided."}\n\n`;
@@ -36,9 +36,9 @@ module.exports = (client) => async (guild, member) => {
     description,
     fields,
     footer: { text: `Network ID: ${network.uuid}` },
-    image: { url: member.avatarURL, height: 50, width: 50 },
+    image: { url: member.displayAvatarURL(), height: 50, width: 50 },
     title: "Reported Network User",
   }).sendable;
-  await channel.createMessage({ embed });
+  await channel.send({ embeds: [embed] });
   return;
 };

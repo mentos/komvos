@@ -9,7 +9,7 @@ const sql = postgres({
 
   debug:
     process.env.NODE_ENV === "dev"
-      ? (_, q, p) => {
+      ? (_, q, _p) => {
           console.log(`
       [======|: QUERY - start :|======]
       ${q}

@@ -35,8 +35,8 @@ module.exports = base({
         }
       );
 
-      this.channel.createMessage({
-        embed: successEmbed({
+      this.channel.send({
+        embeds: [successEmbed({
           title: "Your network is ready",
           command: true,
           description:
@@ -49,7 +49,7 @@ module.exports = base({
             ["Announcements Channel", channel.mention],
             ["Invitations", `\`k!network-invite [server id] ${passphrase}\``],
           ],
-        }),
+        })],
       });
     } catch (e) {
       throw new CommandError(

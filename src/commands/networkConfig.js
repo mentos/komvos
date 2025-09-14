@@ -1,4 +1,4 @@
-const Eris = require("eris");
+// Discord.js permissions handling
 const Constants = require("../constants");
 const { UpdateGuildSettings } = require("../lib/resourceRepo");
 const { failureEmbed, successEmbed } = require("../lib/EmbedBuilder");
@@ -27,11 +27,11 @@ module.exports = base({
       settings = await this.client.repo.GetGuildClientSettings(this.guild.id);
 
       if (!settings.channelId) {
-        this.channel.createMessage({
-          embed: failureEmbed({
+        this.channel.send({
+          embeds: [failureEmbed({
             command: false,
             description: "No channel was found",
-          }),
+          })],
         });
         return;
       }
@@ -39,11 +39,11 @@ module.exports = base({
       const _channel = this.guild.channels.get(settings.channelId);
 
       if (!_channel) {
-        this.channel.createMessage({
-          embed: failureEmbed({
+        this.channel.send({
+          embeds: [failureEmbed({
             command: false,
             description: "No channel was found",
-          }),
+          })],
         });
         return;
       }
@@ -59,8 +59,8 @@ module.exports = base({
         "sendMessages",
       ];
 
-      let _permissions = _channel.permissionsOf(this.client.user.id);
-      let json = new Eris.Permission(_permissions.allow).json;
+      let _permissions = _channel.permissionsFor(this.client.user.id);
+      let json = _permissions.serialize();
 
       this.replyWithConfig(
         "Channel Permissions Check",
@@ -69,8 +69,8 @@ module.exports = base({
           .join("\n")
       );
 
-      _permissions = this.guild.permissionsOf(this.client.user.id);
-      json = new Eris.Permission(_permissions.allow).json;
+      _permissions = this.guild.members.me.permissions;
+      json = _permissions.serialize();
 
       this.replyWithConfig(
         "Server Permissions Check",
@@ -90,11 +90,11 @@ module.exports = base({
     }[rawKey];
 
     if (isEmpty(key)) {
-      this.channel.createMessage({
-        embed: failureEmbed({
+      this.channel.send({
+        embeds: [failureEmbed({
           command: true,
           description: `**Proper usage:** \`${this.usage}\`.`,
-        }),
+        })],
       });
       return;
     }
@@ -112,7 +112,7 @@ module.exports = base({
         clearValue = true;
         value = null;
       } else {
-        const match = value.match(/^\<@&?(\d{17,19})\>$/);
+        const match = value.match(/^<@&?(\d{17,19})>$/);
         value = match && match[1] ? match[1] : null;
       }
     } else {
@@ -208,12 +208,12 @@ module.exports = base({
   },
 
   replyWithConfig: async function (key, value, title = "Komvos Settings") {
-    await this.channel.createMessage({
-      embed: successEmbed({
+    await this.channel.send({
+      embeds: [successEmbed({
         fields: [[key + ":", value]],
         title,
         titlePrefix: "",
-      }),
+      })],
     });
   },
 });

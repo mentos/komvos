@@ -84,16 +84,16 @@ module.exports = base({
     announcementsChannel
   ) {
     await AddGuildToNetwork(targetGuild.id, network.id);
-    await announcementsChannel.createMessage(
+    await announcementsChannel.send(
       `Folks at server **${targetGuild.name}** accepted your **Komvos** network invitation!`
     );
-    await targetChannel.createMessage(
+    await targetChannel.send(
       `Congrats! You are now member of **Komvos** network: \`${network.uuid}\`!`
     );
   },
 
   handleRejection: async function (targetGuild, announcementsChannel) {
-    await announcementsChannel.createMessage(
+    await announcementsChannel.send(
       `Folks at server **${targetGuild.name}** rejected your **Komvos** network invitation.`
     );
   },
