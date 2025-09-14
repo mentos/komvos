@@ -1,5 +1,5 @@
 const config = require("../config");
-const { sql } = require("../db");
+const { sql } = require("../db/index");
 
 module.exports = (client) =>
   async function (guildId) {

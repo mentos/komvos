@@ -3,7 +3,7 @@ const {
   DisbandNetwork,
   GetGuildOwnedNetwork,
   GetNetworkGuilds,
-} = require("../lib/resourceRepo");
+} = require("../lib/resourceRepo/index");
 const { isEmpty } = require("../utils");
 const base = require("./base");
 

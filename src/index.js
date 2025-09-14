@@ -1,7 +1,7 @@
 const prexit = require("prexit");
 const client = require("./client");
 const events = require("./events");
-const { sql } = require("./db");
+const { sql } = require("./db/index");
 
 client.on("guildBanAdd", events.guildBanAdd(client));
 client.on("guildBanRemove", events.guildBanRemove(client));
@@ -11,6 +11,7 @@ client.on("guildMemberAdd", events.guildMemberAdd(client));
 client.on("messageCreate", events.messageCreate(client));
 client.on("ready", () => console.log("Ready!"));
 
+const config = require("./config");
 client.login(config.botToken);
 
 prexit(async () => await sql.end({ timeout: 5 }));

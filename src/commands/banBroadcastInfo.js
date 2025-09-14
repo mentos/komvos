@@ -2,7 +2,7 @@ const base = require("./base");
 const {
   GetGuildActiveNetwork,
   GetNetworkBroadcast,
-} = require("../lib/resourceRepo");
+} = require("../lib/resourceRepo/index");
 const EmbedBuilder = require("../lib/EmbedBuilder");
 
 module.exports = base({

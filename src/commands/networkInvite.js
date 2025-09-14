@@ -3,7 +3,7 @@ const {
   AddGuildToNetwork,
   GetGuildNetworksCount,
   GetGuildOwnedNetwork,
-} = require("../lib/resourceRepo");
+} = require("../lib/resourceRepo/index");
 const base = require("./base");
 
 const { CommandError, CommandTargetError } = base;

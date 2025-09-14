@@ -2,7 +2,7 @@ const GuildBroadcastPrompt = require("../lib/GuildBroadcastPrompt");
 const {
   GetGuildActiveNetwork,
   RemoveGuildFromNetwork,
-} = require("../lib/resourceRepo");
+} = require("../lib/resourceRepo/index");
 const base = require("./base");
 
 module.exports = base({

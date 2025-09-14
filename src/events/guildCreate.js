@@ -1,5 +1,5 @@
 const config = require("../config");
-const { UpdateGuildSettings } = require("../lib/resourceRepo");
+const { UpdateGuildSettings } = require("../lib/resourceRepo/index");
 
 module.exports = () => async (guild) => {
   await UpdateGuildSettings(

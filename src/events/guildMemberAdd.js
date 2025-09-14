@@ -2,7 +2,7 @@ const EmbedBuilder = require("../lib/EmbedBuilder");
 const {
   GetBanBroadcast,
   GetGuildActiveNetwork,
-} = require("../lib/resourceRepo");
+} = require("../lib/resourceRepo/index");
 
 module.exports = (client) => async (guild, member) => {
   const network = await GetGuildActiveNetwork(guild.id);

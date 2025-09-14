@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { Client, Collection, GatewayIntentBits, PermissionsBitField } = require("discord.js");
 
-const config = require("./config");
+// const config = require("./config"); // TODO: Remove if not needed
 
 const client = new Client({
   intents: [

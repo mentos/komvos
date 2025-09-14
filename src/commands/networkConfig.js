@@ -1,6 +1,6 @@
 // Discord.js permissions handling
 const Constants = require("../constants");
-const { UpdateGuildSettings } = require("../lib/resourceRepo");
+const { UpdateGuildSettings } = require("../lib/resourceRepo/index");
 const { failureEmbed, successEmbed } = require("../lib/EmbedBuilder");
 const { isEmpty } = require("../utils");
 const base = require("./base");

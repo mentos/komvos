@@ -1,0 +1,20 @@
+"use strict";
+module.exports = {
+    PROMPT_ACCEPT_EMOJI: "👍",
+    PROMPT_REJECT_EMOJI: "👎",
+    REPORT_ABUSER: "Harassment, threatening behaviour or doxxing",
+    REPORT_ADVERTISING: "Advertising / invite posting",
+    REPORT_BAN_EVASION: "Ban Evasion, duplicate account or impersonation",
+    REPORT_CHILD_SAFETY: "Child Safety",
+    REPORT_GRAPHIC_CONTENT: "Graphic or illegal content",
+    REPORT_RAIDING: "Raiding",
+    REPORT_SCAM_ILLEGAL_SERVICES: "Scam, fraud or illegal services / cheating",
+    REPORT_SPAMMING_TROLLING: "Spamming / trolling",
+    REPORT_MUTUAL_NETWORK: "Follow up network ban",
+    SETTINGS_ALLOW_INVITES: "allowInvites",
+    SETTINGS_ALERTS_CHANNEL_ID: "alertsChannelId",
+    SETTINGS_CHANNEL_ID: "channelId",
+    SETTINGS_PREFIX: "prefix",
+    SETTINGS_ROLE_ID: "reportedRoleId",
+};
+//# sourceMappingURL=constants.js.map

@@ -5,7 +5,7 @@ const {
   GetGuildActiveNetwork,
   GetNetworkGuilds,
   RevokeBanBroadcast,
-} = require("../lib/resourceRepo");
+} = require("../lib/resourceRepo/index");
 
 async function BroadcastBanRevokeReport({
   bannedUserId,

@@ -2,14 +2,14 @@ const Constants = require("../constants");
 const EmbedBuilder = require("./EmbedBuilder");
 const ReactionHandler = require("./ReactionHandler");
 const { CommandError } = require("../commands/base");
-const { errorCodes } = require("../db");
+const { pgErrorCodes } = require("../db/index");
 const { isEmpty } = require("../utils");
 const {
   AddBanBroadcast,
   GetBanBroadcast,
   GetGuildActiveNetwork,
   GetNetworkGuilds,
-} = require("./resourceRepo");
+} = require("./resourceRepo/index");
 
 const REPORT_OPTIONS = {
   "1️⃣": Constants.REPORT_ABUSER,
@@ -212,7 +212,7 @@ module.exports = async ({
     try {
       await AddBanBroadcast(banInfo);
     } catch (e) {
-      if (errorCodes[e.code] === "unique_violation") {
+      if (e.code === pgErrorCodes.UNIQUE_VIOLATION) {
         const description =
           `🔔 _A broadcast for ${banInfo.banned_tag} ` +
           `already sent to network_`;

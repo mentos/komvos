@@ -10,8 +10,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Core Commands
 - **Start development server**: `npm run app:start:dev` (uses nodemon for auto-reload)
-- **Linting**: `npm run lint` (check for issues), `npm run lint:fix` (auto-fix issues)
-- **Code formatting**: `npm run prettify` (formats all .js files with Prettier)
+- **TypeScript build**: `npm run build` (compile TS to JS), `npm run build:watch` (watch mode)
+- **Type checking**: `npm run typecheck` (check types without building)
+- **Linting**: `npm run lint` (check JS/TS files), `npm run lint:fix` (auto-fix issues)
+- **Code formatting**: `npm run prettify` (formats all .js/.ts files with Prettier)
 
 ### Production Commands (PM2)
 - **Start production**: `npm run app:start`
@@ -46,9 +48,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **`src/db/`**: Database connection and SQL utilities
 
 ### Database Integration
-- Uses PostgreSQL with the `postgres` library
-- Database operations centralized in `src/lib/resourceRepo/`
-- Connection managed in `src/db/index.js` with graceful shutdown
+- **Database Layer**: Fully migrated to TypeScript for better type safety
+- **PostgreSQL**: Uses the `postgres` library with typed queries
+- **Repository Pattern**: All database operations in `src/lib/resourceRepo/` (TypeScript)
+- **Connection Management**: `src/db/` handles connections with error codes and utilities
+- **Type Safety**: Comprehensive database models and query result types
 
 ### Bot Features
 - **Network Management**: Servers can create/join/leave moderation networks
@@ -74,5 +78,12 @@ Commands are dynamically loaded from `src/commands/` directory. Each command exp
 - Updated embed syntax from `{ embed: ... }` to `{ embeds: [...] }`
 - Migrated from `discord-command-parser` to custom command parsing
 - Updated permission and user property access patterns
+
+**Database TypeScript Migration:**
+- **Full TypeScript conversion**: All database operations now use TypeScript
+- **Type safety**: Comprehensive type definitions for all database models and operations
+- **Repository pattern**: Typed repository functions with proper error handling
+- **Build process**: TypeScript compilation to `dist/` directory
+- **Dual support**: JavaScript files continue to work alongside TypeScript database layer
 
 Default command prefix: `k!` (configurable per server)

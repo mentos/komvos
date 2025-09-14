@@ -1,6 +1,6 @@
-const { CreateNetwork } = require("../lib/resourceRepo");
+const { CreateNetwork } = require("../lib/resourceRepo/index");
 const { successEmbed } = require("../lib/EmbedBuilder");
-const { errorCodes } = require("../db");
+const { pgErrorCodes } = require("../db/index");
 const base = require("./base");
 const { CommandError } = base;
 
@@ -53,7 +53,7 @@ module.exports = base({
       });
     } catch (e) {
       throw new CommandError(
-        errorCodes[e.code] === "unique_violation"
+        e.code === pgErrorCodes.UNIQUE_VIOLATION
           ? "You already are in a network."
           : "An unknown error occurred. Please try again."
       );
