@@ -1,1 +1,0 @@
-{"version":3,"file":"getGuildOwnedNetwork.js","sourceRoot":"","sources":["../../../src/lib/resourceRepo/getGuildOwnedNetwork.ts"],"names":[],"mappings":";;AAOA,iDAaC;AAbD,SAAwB,8BAA8B,CAAC,GAAQ;IAC7D,OAAO,KAAK,UAAU,oBAAoB,CAAC,OAAe;QACxD,MAAM,CAAC,OAAO,CAAC,GAAG,MAAM,GAAG,CAAW;;;;;;4BAMd,OAAO;cACrB,CAAC;QAEX,OAAO,OAAO,CAAC;IACjB,CAAC,CAAC;AACJ,CAAC"}

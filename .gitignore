@@ -4,3 +4,4 @@ notes.md
 sql.md
 .env
 .env.Development
+dist/*

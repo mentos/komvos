@@ -1,1 +1,0 @@
-{"version":3,"file":"deleteGuildSettings.js","sourceRoot":"","sources":["../../../src/lib/resourceRepo/deleteGuildSettings.ts"],"names":[],"mappings":";;AAMA,gDAQC;AARD,SAAwB,6BAA6B,CAAC,GAAQ;IAC5D,OAAO,KAAK,UAAU,mBAAmB,CAAC,OAAe;QACvD,MAAM,GAAG,CAAA;;;;qBAIQ,OAAO,EAAE,CAAC;IAC7B,CAAC,CAAC;AACJ,CAAC"}

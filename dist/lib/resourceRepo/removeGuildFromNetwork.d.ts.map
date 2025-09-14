@@ -1,1 +1,0 @@
-{"version":3,"file":"removeGuildFromNetwork.d.ts","sourceRoot":"","sources":["../../../src/lib/resourceRepo/removeGuildFromNetwork.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,GAAG,EAAE,MAAM,UAAU,CAAC;AAEpC,UAAU,8BAA8B;IACtC,CAAC,OAAO,EAAE,MAAM,EAAE,SAAS,EAAE,MAAM,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;CACrD;AAED,MAAM,CAAC,OAAO,UAAU,gCAAgC,CAAC,GAAG,EAAE,GAAG,GAAG,8BAA8B,CAejG"}
